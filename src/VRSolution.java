@@ -19,6 +19,11 @@ public class VRSolution {
 	}
 	
 	//Students should implement another solution
+	public void clarkeWrightSolution(){
+		ClarkeWright cw = new ClarkeWright();
+		this.soln = cw.solve(prob.customers);
+
+	}
 	
 	//Calculate the total journey
 	public double solnCost(){

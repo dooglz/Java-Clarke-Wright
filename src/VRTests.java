@@ -38,8 +38,9 @@ public class VRTests {
 			VRSolution vrs = new VRSolution(vrp);
 
 			//Create a new solution using our poor algorithm
-			vrs.oneRoutePerCustomerSolution();
-
+			//vrs.oneRoutePerCustomerSolution();
+			vrs.clarkeWrightSolution();
+			
 			System.out.printf("%s\t%s\t%d\t%.0f\t%s\n",base,"dumb",vrp.size(),vrs.solnCost(),vrs.verify());
 			vrs.writeSVG(outdir+base+"prob.svg",outdir+base+"dmsn.svg");
 			if (new File(problemdir+base+"cwsn.csv").exists()){
