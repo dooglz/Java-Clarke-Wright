@@ -33,6 +33,7 @@ public class VRTests {
 				};
 		System.out.println("\nShould Pass");
 		System.out.println("Problem     \tSoln\tSize\tCost\tValid");
+		
 		for (String base:shouldPass){
 			VRProblem vrp = new VRProblem(problemdir+base+"prob.csv");
 			VRSolution vrs = new VRSolution(vrp);
@@ -41,8 +42,9 @@ public class VRTests {
 			//vrs.oneRoutePerCustomerSolution();
 			vrs.clarkeWrightSolution();
 			
-			System.out.printf("%s\t%s\t%d\t%.0f\t%s\n",base,"dumb",vrp.size(),vrs.solnCost(),vrs.verify());
-			vrs.writeSVG(outdir+base+"prob.svg",outdir+base+"dmsn.svg");
+			//System.out.printf("%s\t%s\t%d\t%.0f\t%s\n",base,"dumb",vrp.size(),vrs.solnCost(),vrs.verify());
+			//vrs.writeSVG(outdir+base+"prob.svg",outdir+base+"dmsn.svg");
+			
 			if (new File(problemdir+base+"cwsn.csv").exists()){
 				vrs.readIn(problemdir+base+"cwsn.csv");
 
@@ -53,6 +55,7 @@ public class VRTests {
 				vrs.writeSVG(outdir+base+"prob.svg",outdir+base+"cwsn.svg");
 			}
 		}
+		
 		System.out.println("\nShould Fail");
 		System.out.println("Problem\tSolution\tSize\tCost\tValid");
 		for (String b:shouldFail){

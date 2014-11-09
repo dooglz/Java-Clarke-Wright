@@ -4,18 +4,19 @@ import java.util.List;
 
 class Route implements Comparable<Route>
 {
+	private int _weight;
 	private double _cost;
 	private double _savings;
-    private ArrayList<Customer> _customers;
+    public ArrayList<Customer> customers;
     
 	private void calculateSavings()
 	{
-		//cost of each 
 		double originalCost = 0;
 		double newCost = 0;
 		double tempcost =0;
 		Customer prev = null;
-		for(Customer c:_customers)
+		
+		for(Customer c:customers)
 		{ 
 			tempcost = Math.sqrt((c.x*c.x)+(c.y*c.y));
 			originalCost += (2.0*tempcost);
@@ -29,50 +30,58 @@ class Route implements Comparable<Route>
 			}else{
 				newCost += tempcost;
 			}
+			
 			prev = c;
 		}
+		
 		newCost += tempcost;
-		
-		for(Customer c:_customers)
-		{
-			//use squared distance for computational speed
-			//originalCost += (c.x * c.x) + (c.y * c.y);
-		}
-		
 		_cost = newCost;
 		_savings = originalCost - newCost;
 	}
 	
 	public Route(){
-		_customers = new ArrayList<Customer>();
+		customers = new ArrayList<Customer>();
+		_weight =0;
+		_cost= 0;
+		_savings =0;
 	}
-    public void addCustomer(Customer c)
-    {
-    	_customers.add(c);
+	
+    public void addCustomer(Customer c, boolean order){
+    	if(order){
+    		customers.add(0,c);
+    	}else{
+    		customers.add(c);
+    	}
+    	if(c.c > 100){
+    		System.out.println("SINGLE CUSTOMER WITH TOO MUCH");
+    	}
+    	_weight += c.c;
+    	
+    	if(_weight > 100){
+    		System.out.println("Route Overlaoded");
+    	}
     	calculateSavings();
     }
     
-    public double getSavings()
-    {
+    public double getSavings(){
     	return _savings;
-    	
-    };
-    public double getCost()
-    {
+    }
+    public double getCost(){
     	return _cost;
     }
-
+    public int getWeight(){
+    	return _weight;
+    }
 	public int compareTo(Route r) {
-		return (int) (r.getSavings() - this._savings);
+		//System.out.println(r.getSavings()+" --- "+this._savings);
+		return Double.compare(r.getSavings(), this._savings);
 	}
 
 }
 
 public class ClarkeWright {
 	public static int truckCapacity = 100;
-	
-	
-	
+
 	public static ArrayList<List<Customer>> solve(ArrayList<Customer> customers)
 	{
 		ArrayList<List<Customer>> solution = new ArrayList<List<Customer>>();
@@ -85,14 +94,86 @@ public class ClarkeWright {
 			for(int j=i+1; j<customers.size(); j++)
 			{
 				Route r = new Route();
-				r.addCustomer(customers.get(i));
-				r.addCustomer(customers.get(j));
+				r.addCustomer(customers.get(i),false);
+				r.addCustomer(customers.get(j),false);
 				pairs.add(r);
 			}
 		}
 		//order pairs by savings
 		Collections.sort(pairs);
 		
+		//start combining routes
+		for(int i=0; i<pairs.size(); i++)
+		{
+			Route ro = pairs.get(i);
+			
+			for(int j=1; j<pairs.size(); j++)
+			{
+				Route r = pairs.get(j);
+				Customer c1 = r.customers.get(0);
+				Customer c2 = r.customers.get(r.customers.size()-1);
+				Customer cr1 = ro.customers.get(0);
+				Customer cr2 = ro.customers.get(ro.customers.size()-1);
+				//do they have any common nodes?
+				if(c1 == cr1){
+					//could we combine these based on weight?
+					if(c2.c + ro.getWeight() < 100){
+						ro.addCustomer(c2, true);
+						pairs.remove(j);
+					}
+				}else if (c1 == cr2){
+					if(c2.c + ro.getWeight() < 100){
+						ro.addCustomer(c2, false);
+						pairs.remove(j);
+					}
+				}else if (c2 == cr1){
+					if(c1.c + ro.getWeight() < 100){
+						ro.addCustomer(c1, true);
+						pairs.remove(j);
+					}
+				}else if (c2 ==cr2){
+					if(c1.c + ro.getWeight() < 100){
+						ro.addCustomer(c1, false);
+						pairs.remove(j);
+					}
+				}
+			}
+			//Now remove any routes that have any of the already visited customers
+			for(int j=1; j<pairs.size(); j++)
+			{
+				Route r = pairs.get(j);
+				if (!Collections.disjoint(r.customers, ro.customers))
+				{
+					pairs.remove(r);
+				}
+			}
+		}
+		
+		//output
+		for(Route r:pairs)
+		{
+			ArrayList<Customer> l = new ArrayList<Customer>();
+			l.addAll(r.customers);
+			solution.add(l);
+		}
 		return solution;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

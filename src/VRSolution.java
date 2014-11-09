@@ -102,7 +102,7 @@ public class VRSolution {
 		String hdr = 
 				"<?xml version='1.0'?>\n"+
 				"<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' '../../svg11-flat.dtd'>\n"+
-				"<svg width='8cm' height='8cm' viewBox='0 0 500 500' xmlns='http://www.w3.org/2000/svg' version='1.1'>\n";
+				"<svg width='16cm' height='16cm' viewBox='0 0 1000 1000' xmlns='http://www.w3.org/2000/svg' version='1.1'>\n";
 		String ftr = "</svg>";
         StringBuffer psb = new StringBuffer();
         StringBuffer ssb = new StringBuffer();
