@@ -4,6 +4,7 @@ import java.util.List;
 
 class Route implements Comparable<Route>
 {
+	private int _capacity;
 	private int _weight;
 	private double _cost;
 	private double _savings;
@@ -39,7 +40,8 @@ class Route implements Comparable<Route>
 		_savings = originalCost - newCost;
 	}
 	
-	public Route(){
+	public Route(int capacity){
+		_capacity = capacity;
 		customers = new ArrayList<Customer>();
 		_weight =0;
 		_cost= 0;
@@ -47,19 +49,23 @@ class Route implements Comparable<Route>
 	}
 	
     public void addCustomer(Customer c, boolean order){
+    	
     	if(order){
     		customers.add(0,c);
     	}else{
     		customers.add(c);
     	}
+    	
     	if(c.c > 100){
     		System.out.println("SINGLE CUSTOMER WITH TOO MUCH");
     	}
+    	
     	_weight += c.c;
     	
     	if(_weight > 100){
-    		System.out.println("Route Overlaoded");
+    		System.out.println("Route Overloaded");
     	}
+    	
     	calculateSavings();
     }
     
@@ -81,7 +87,7 @@ class Route implements Comparable<Route>
 
 public class ClarkeWright {
 	public static int truckCapacity = 100;
-
+	
 	public static ArrayList<List<Customer>> solve(ArrayList<Customer> customers)
 	{
 		ArrayList<List<Customer>> solution = new ArrayList<List<Customer>>();
@@ -93,7 +99,7 @@ public class ClarkeWright {
 		{
 			for(int j=i+1; j<customers.size(); j++)
 			{
-				Route r = new Route();
+				Route r = new Route(truckCapacity);
 				r.addCustomer(customers.get(i),false);
 				r.addCustomer(customers.get(j),false);
 				pairs.add(r);
@@ -107,7 +113,7 @@ public class ClarkeWright {
 		{
 			Route ro = pairs.get(i);
 			
-			for(int j=1; j<pairs.size(); j++)
+			for(int j=i+1; j<pairs.size(); j++)
 			{
 				Route r = pairs.get(j);
 				Customer c1 = r.customers.get(0);
@@ -117,29 +123,29 @@ public class ClarkeWright {
 				//do they have any common nodes?
 				if(c1 == cr1){
 					//could we combine these based on weight?
-					if(c2.c + ro.getWeight() < 100){
+					if(c2.c + ro.getWeight() <= truckCapacity){
 						ro.addCustomer(c2, true);
 						pairs.remove(j);
 					}
 				}else if (c1 == cr2){
-					if(c2.c + ro.getWeight() < 100){
+					if(c2.c + ro.getWeight() <= truckCapacity){
 						ro.addCustomer(c2, false);
 						pairs.remove(j);
 					}
 				}else if (c2 == cr1){
-					if(c1.c + ro.getWeight() < 100){
+					if(c1.c + ro.getWeight() <= truckCapacity){
 						ro.addCustomer(c1, true);
 						pairs.remove(j);
 					}
 				}else if (c2 ==cr2){
-					if(c1.c + ro.getWeight() < 100){
+					if(c1.c + ro.getWeight() <= truckCapacity){
 						ro.addCustomer(c1, false);
 						pairs.remove(j);
 					}
 				}
 			}
 			//Now remove any routes that have any of the already visited customers
-			for(int j=1; j<pairs.size(); j++)
+			for(int j=i+1; j<pairs.size(); j++)
 			{
 				Route r = pairs.get(j);
 				if (!Collections.disjoint(r.customers, ro.customers))

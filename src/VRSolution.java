@@ -21,8 +21,9 @@ public class VRSolution {
 	//Students should implement another solution
 	public void clarkeWrightSolution(){
 		ClarkeWright cw = new ClarkeWright();
+		cw.truckCapacity = prob.depot.c;
 		this.soln = cw.solve(prob.customers);
-
+		System.out.println("CW algo finished, deliveries:"+prob.customers.size()+" routes:"+soln.size());
 	}
 	
 	//Calculate the total journey
