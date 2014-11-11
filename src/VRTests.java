@@ -34,8 +34,8 @@ public class VRTests {
 		System.out.println("\nShould Pass");
 		System.out.println("Problem     \tSoln\tCusts\tTrips\tCost\tValid");
 		
-		//for (String base:shouldPass){
-		String base = "rand00070";
+		for (String base:shouldPass){
+		
 			System.out.println(base+"------");
 			VRProblem vrp = new VRProblem(problemdir+base+"prob.csv");
 			VRSolution vrs = new VRSolution(vrp);
@@ -56,8 +56,8 @@ public class VRTests {
 			//Write the SVG file
 			vrds.writeSVG(outdir+base+"prob.svg",outdir+base+"dumbsn.svg");
 			vrs.writeSVG(outdir+base+"prob.svg",outdir+base+"cwsn.svg");
-		//}
-	/*	
+		}
+		
 		System.out.println("\nShould Fail");
 		System.out.println("Problem     \tSoln\tCusts\tTrips\tCost\tValid");
 		for (String base:shouldFail){
@@ -76,6 +76,6 @@ public class VRTests {
 			vrds.writeSVG(outdir+base+"prob.svg",outdir+base+"dumbsn.svg");
 			vrs.writeSVG(outdir+base+"prob.svg",outdir+base+"cwsn.svg");
 		}
-		*/
+		System.out.println("\nDone");
 	}
 }
