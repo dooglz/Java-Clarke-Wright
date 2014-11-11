@@ -35,7 +35,7 @@ public class VRTests {
 		System.out.println("Problem     \tSoln\tCusts\tTrips\tCost\tValid");
 		
 		//for (String base:shouldPass){
-		String base = "rand00020";
+		String base = "rand00070";
 			System.out.println(base+"------");
 			VRProblem vrp = new VRProblem(problemdir+base+"prob.csv");
 			VRSolution vrs = new VRSolution(vrp);
