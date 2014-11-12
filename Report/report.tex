@@ -1,0 +1,155 @@
+%%% This LaTeX source document can be used as the basis for your technical
+%%% report. Intentionally stripped and simplified
+%%% and commands should be adjusted for your particular paper - title, 
+%%% author, citations, equations, etc.
+% % Citations/references are in report.bib 
+
+\documentclass[conference]{acmsiggraph}
+
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+\newcommand{\figuremacroW}[4]{
+	\begin{figure}[h] %[htbp]
+		\centering
+		\includegraphics[width=#4\columnwidth]{#1}
+		\caption[#2]{\textbf{#2} - #3}
+		\label{fig:#1}
+	\end{figure}
+}
+
+\newcommand{\figuremacroF}[4]{
+	\begin{figure*}[h] % [htbp]
+		\centering
+		\includegraphics[width=#4\textwidth]{#1}
+		\caption[#2]{\textbf{#2} - #3}
+		\label{fig:#1}
+	\end{figure*}
+}
+\usepackage{xcolor}
+\definecolor{lbcolor}{rgb}{0.98,0.98,0.98}
+\usepackage{listings}
+
+\lstset{
+	escapeinside={/*@}{@*/},
+	language=C++,
+	%basicstyle=\small\sffamily,
+	%basicstyle=\small\sffamily,	
+	basicstyle=\fontsize{8.5}{12}\selectfont,
+	%basicstyle=\small\ttfamily,
+	%basicstyle=\scriptsize, % \footnotesize,
+	%basicstyle=\footnotesize,
+	%keywordstyle=\color{blue}\bfseries,
+	%basicstyle= \listingsfont,
+	numbers=left,
+	numbersep=2pt,    
+	xleftmargin=2pt,
+	%numberstyle=\tiny,
+	frame=tb,
+	%frame=single,
+	columns=fullflexible,
+	showstringspaces=false,
+	tabsize=2,
+	keepspaces=true,
+	showtabs=false,
+	showspaces=false,
+	%showstringspaces=true
+	backgroundcolor=\color{lbcolor},
+	morekeywords={inline,public,class,private,protected,struct},
+	captionpos=t,
+	lineskip=-0.4em,
+	aboveskip=10pt,
+	%belowskip=50pt,
+	extendedchars=true,
+	breaklines=true,
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	keywordstyle=\color[rgb]{0,0,1},
+	commentstyle=\color[rgb]{0.133,0.545,0.133},
+	stringstyle=\color[rgb]{0.627,0.126,0.941}
+}
+
+\usepackage{lipsum}
+
+\TOGonlineid{45678}
+\TOGvolume{0}
+\TOGnumber{0}
+\TOGarticleDOI{1111111.2222222}
+\TOGprojectURL{}
+\TOGvideoURL{}
+\TOGdataURL{}
+\TOGcodeURL{}
+
+\title{Clarke-Wright vehicle routing algorithm\\
+	   Implementation Report}
+
+\author{Sam Serrels\\\ 40082367@napier.ac.uk \\
+Edinburgh Napier University\\
+Algorithms and Data Structures (SET09117)}
+\pdfauthor{Sam Serrels}
+
+\keywords{Multi-platform Physics, Optimisation, GPU, Cell, PS3}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Realistic Real time physics simulation is highly sought after in interactive applications, especially games. Achieving high-accuracy while maintaining performance in often resource restricted environments(I.E a games console) requires the highest level of optimisations and often results in a trade-off with simulation speed against Accuracy. This project attempts to record and analyse the performance of various optimisations on a simulated scene. This will be taken further by applying the project to various different processing architectures. The scene that will be simulated is a large set of Bouncy balls, travelling down a hill.
+\cite{CW}
+\cite{CWj}
+\paragraph{Physics Engines}
+Large and complex video games tend to use 3rd party physics solutions, this vastly cuts down on the project development man-hours, and the maintenance thereafter. Third party physics solutions have the benefit of being battle tested out in the wild beforehand, so internal reliability is usually a given. A further benefit is that being developed solely for the purpose of being a "a good physics engine" by people who are usually experts in the field, large optimisations are already implemented. The problems arise in the implementation, the coupling of a physics engine and the existing codebase. While they are usually well coded, they are not tailor made to each game. 
+
+\section{Method}
+\paragraph{Optimising for Physics Engines}
+Trying to regain performance from an external physics engine can be a hard task, diving into the source code requires expert knowledge of the inner-workings of the whole system. A common path is to shape the design of the game code to conform better to the demands of the physics engine and hope that the internal optimisations  will be sufficient. Often enough, they are not.
+
+\section{Results}
+\paragraph{Optimising for Physics Engines}
+Trying to regain performance from an external physics engine can be a hard task, diving into the source code requires expert knowledge of the inner-workings of the whole system. A common path is to shape the design of the game code to conform better to the demands of the physics engine and hope that the internal optimisations  will be sufficient. Often enough, they are not.
+
+\figuremacroW
+{rand00040cwsn}
+{Bullet Physics PS3 Pipeline}
+{Requires Intermediate Data Swapping Between PPU and SPU}
+{0.8}
+
+\figuremacroW
+{rand00020cwsn}
+{Bullet Physics PS3 Pipeline}
+{Requires Intermediate Data Swapping Between PPU and SPU}
+{0.8}
+
+\lipsum
+
+\figuremacroF
+{chart1}
+{Sequential Clark Wright implementation results}
+{Requires Intermediate Data Swapping Between PPU and SPU}
+{1.0}
+
+\section{Conclusions}
+
+\paragraph{Optimising for Physics Engines}
+Trying to regain performance from an external physics engine can be a hard task, diving into the source code requires expert knowledge of the inner-workings of the whole system. A common path is to shape the design of the game code to conform better to the demands of the physics engine and hope that the internal optimisations  will be sufficient. Often enough, they are not.
+
+\section{Appendix}
+
+
+\bibliographystyle{acmsiggraph}
+\bibliography{report}
+
+\clearpage
+\section{Code}
+\subsection{ClarkeWright.java}
+\lstinputlisting[language=Java]{../src/ClarkeWright.java}
+
+\subsection{VRSolution.java}
+Lines 20 to 28
+\lstinputlisting[language=Java, firstline=20, lastline=27]{../src/VRSolution.java}
+
+\subsection{Experiment.java}
+\lstinputlisting[language=Java]{../src/Experiment.java}
+
+\end{document}
+

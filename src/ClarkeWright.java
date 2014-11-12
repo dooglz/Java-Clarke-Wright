@@ -54,7 +54,7 @@ class Route implements Comparable<Route>
 		}
 
 		if(c.c > _capacity){
-			System.out.println("SINGLE CUSTOMER WITH TOO MUCH");
+			System.out.println("Customer order too large");
 		}
 
 		_weight += c.c;
@@ -83,12 +83,12 @@ class Route implements Comparable<Route>
 
 public class ClarkeWright 
 {
-	public static int truckCapacity = 100;
+	public static int truckCapacity = 0;
 
 	public static ArrayList<List<Customer>> solve(ArrayList<Customer> customers){
 		ArrayList<List<Customer>> solution = new ArrayList<List<Customer>>();
 
-		HashSet<Customer> abandonedCustomers = new HashSet<Customer>();
+		HashSet<Customer> abandoned = new HashSet<Customer>();
 
 		//calculate the savings of all the pairs
 		ArrayList<Route> pairs = new ArrayList<Route>(); 
@@ -146,7 +146,7 @@ public class ClarkeWright
 				}
 			}
 
-			//Now remove any pairs that have any of the already visited customers
+			//Remove any pairs that have any visited customers
 			for(int j=i+1; j<pairs.size(); j++){				
 				Route r = pairs.get(j);
 				Customer c1 = r.customers.get(0);
@@ -160,12 +160,12 @@ public class ClarkeWright
 				}
 				if(a>0){
 					if(a == 1){
-						abandonedCustomers.add(c2);
+						abandoned.add(c2);
 					}else if(a == 2){
-						abandonedCustomers.add(c1);
+						abandoned.add(c1);
 					}else if(a == 3){
-						abandonedCustomers.remove(c1);
-						abandonedCustomers.remove(c2);
+						abandoned.remove(c1);
+						abandoned.remove(c2);
 					}
 					pairs.remove(r);
 					j--;
@@ -175,9 +175,9 @@ public class ClarkeWright
 
 		}
 
-		//Edge case: Sometimes a single Customer can get left out of all routes due to capacity constraints
-		//abandonedCustomers keeps track of all customers not attached to a route
-		for(Customer C:abandonedCustomers){
+		//Edge case: A single Customer can get left out of all routes due to capacity constraints
+		//abandoned keeps track of all customers not attached to a route
+		for(Customer C:abandoned){
 			//we could tack this onto the end of a route if it would fit
 			//or just create a new route just for it. As per the Algorithm 
 			ArrayList<Customer> l = new ArrayList<Customer>();
