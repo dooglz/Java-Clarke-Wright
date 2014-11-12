@@ -2,6 +2,8 @@ import java.util.*;
 public class Experiment {
 
 	public static void main(String[] args)throws Exception{
+		String outdir = "output/";
+		String problemdir = "tests/";
 		String [] probs = {
 				"rand00100",
 				"rand00200","rand00300",
@@ -12,17 +14,19 @@ public class Experiment {
 				};
 		for (String f:probs){
 			ArrayList<Long> timing = new ArrayList<Long>();
-			VRProblem vrp = new VRProblem(f+"prob.csv");
+			VRProblem vrp = new VRProblem(problemdir+f+"prob.csv");
 			VRSolution vrs = new VRSolution(vrp);
+			System.out.printf("%s, %d, [",f,vrp.size());
 			for(int i=0;i<50;i++){
 				long start = System.nanoTime();
-				vrs.oneRoutePerCustomerSolution();
-				timing.add(System.nanoTime()-start);
+				vrs.clarkeWrightSolution();
+				long delta = System.nanoTime()-start;
+				timing.add(delta);
+				System.out.print(delta+", ");
 			}
-			vrs.writeOut(f+"dmsn.csv");
-			System.out.printf("%s , \t%d , \t%f , \t%s\n",
-					f,vrp.size(),
-					vrs.solnCost(),timing);
+			System.out.print("]\n");
+			vrs.writeOut(outdir+f+"CWsn.csv");
+		//	System.out.printf("%s , \t%d , \t%f , \t%s\n",	f,vrp.size(),.solnCost(),timing);
 		}
 		
 	}
