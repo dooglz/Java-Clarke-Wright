@@ -196,6 +196,128 @@ public class ClarkeWright
 		}
 		return solution;
 	}
+	
+	public static ArrayList<List<Customer>> solveP(ArrayList<Customer> customers){
+		ArrayList<List<Customer>> solution = new ArrayList<List<Customer>>();
+		System.out.println("PRRAARARALELEL");
+		HashSet<Customer> abandoned = new HashSet<Customer>();
+
+		//calculate the savings of all the pairs
+		ArrayList<Route> pairs = new ArrayList<Route>(); 
+
+		for(int i=0; i<customers.size(); i++){
+			for(int j=i+1; j<customers.size(); j++){
+				Route r = new Route(truckCapacity);
+				r.addCustomer(customers.get(i),false);
+				r.addCustomer(customers.get(j),false);
+				pairs.add(r);
+			}
+		}
+		//order pairs by savings
+		Collections.sort(pairs);
+
+		//start combining pairs into routes
+		for(int i=0; i<pairs.size(); i++)
+		{
+			Route ro = pairs.get(i);
+
+			for(int j=0; j<pairs.size(); j++){
+				Route r = pairs.get(j);
+				if(r ==ro) {continue;}
+				Customer c1 = r.customers.get(0);
+				Customer c2 = r.customers.get(r.customers.size()-1);
+				Customer cr1 = ro.customers.get(0);
+				Customer cr2 = ro.customers.get(ro.customers.size()-1);
+				boolean which = false;
+				//do they have any common nodes?
+				if(c1 == cr1){
+					//could we combine these based on weight?
+					if(c2.c + ro.getWeight() <= truckCapacity){
+						//Does the route already contain BOTH these nodes already?
+						if(!ro.customers.contains(c2)){
+							ro.addCustomer(c2, true);
+							abandoned.remove(c2);
+						}
+						pairs.remove(r);
+						j--;
+						continue;
+					}
+				}else if (c1 == cr2){
+					if(c2.c + ro.getWeight() <= truckCapacity){
+						if(!ro.customers.contains(c2)){
+							ro.addCustomer(c2, false);
+							abandoned.remove(c2);
+						}
+						pairs.remove(r);
+						j--;
+						continue;
+					}
+				}else if (c2 == cr1){
+					which = true;
+					if(c1.c + ro.getWeight() <= truckCapacity){
+						if(!ro.customers.contains(c1)){
+							ro.addCustomer(c1, true);
+							abandoned.remove(c1);
+						}
+						pairs.remove(r);
+						j--;
+						continue;
+					}
+				}else if (c2 ==cr2){
+					which = true;
+					if(c1.c + ro.getWeight() <= truckCapacity){
+						if(!ro.customers.contains(c1)){
+							ro.addCustomer(c1, false);
+							abandoned.remove(c1);
+						}
+						pairs.remove(r);
+						j--;
+						continue;
+					}	
+				}
+				
+				//If we reach here then the pair hasn't been added to a route 
+				if(Collections.disjoint(ro.customers, r.customers)){
+					//and none of the customers on it are in a previous route
+					//so we get to make a new one!
+					System.out.println("New route!");
+						abandoned.remove(c1);
+						abandoned.remove(c2);
+					continue;
+				}else{
+					//If we are here, then the pair hasn't been combined, but one of it's customers is already in a route
+					//so we put the unvisited customer in the safe zone and remove the route.
+					if(which){
+						abandoned.add(c1);
+					}else{
+						abandoned.add(c2);
+					}
+					pairs.remove(r);
+					j--;
+				}
+			}
+		}
+
+		//Edge case: A single Customer can be left out of all routes due to capacity constraints
+		// abandoned keeps track of all customers not attached to a route
+		for(Customer C:abandoned){
+			//we could tack this onto the end of a route if it would fit
+			//or just create a new route just for it. As per the Algorithm 
+			ArrayList<Customer> l = new ArrayList<Customer>();
+			l.add(C);
+		//	solution.add(l);
+		}
+
+		//output
+		for(Route r:pairs){
+			ArrayList<Customer> l = new ArrayList<Customer>();
+			l.addAll(r.customers);
+			solution.add(l);
+		}
+		return solution;
+	}
+	
+	
 }
 
 

@@ -19,10 +19,15 @@ public class VRSolution {
 	}
 	
 	//Students should implement another solution
-	public void clarkeWrightSolution(){
+	public void clarkeWrightSolution(boolean b){
 		ClarkeWright cw = new ClarkeWright();
 		cw.truckCapacity = prob.depot.c;
-		this.soln = cw.solve(prob.customers);
+		if(b){
+			this.soln = cw.solveP(prob.customers);
+		}else{
+			this.soln = cw.solve(prob.customers);
+		}
+		
 	}
 	
 	//Calculate the total journey

@@ -32,7 +32,7 @@ public class Experiment {
 			System.out.printf("%s, %d\n",f,vrp.size());
 			for(int i=0;i<50;i++){
 				long start = System.nanoTime();
-				vrs.clarkeWrightSolution();
+				vrs.clarkeWrightSolution(false);
 				long delta = System.nanoTime()-start;
 				timing.add(delta);
 				System.out.print(delta+", ");

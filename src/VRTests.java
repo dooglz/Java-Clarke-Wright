@@ -7,8 +7,8 @@ public class VRTests {
 		String problemdir = "tests/";
 		String outdir = "output/";
 		String [] shouldPass = {
-				"rand00010",
-				"rand00020",
+			//	"rand00010",
+				"rand00020"/*,
 				"rand00030",
 				"rand00040",
 				"rand00050",
@@ -34,13 +34,10 @@ public class VRTests {
 				"rand00850",
 				"rand00900",
 				"rand00950",
-				"rand01000"
-				};
-		String [] shouldFail = {
+				"rand01000",
 				"fail00002",
-				"fail00004"
+				"fail00004"*/
 				};
-		System.out.println("\nShould Pass");
 		System.out.println("Problem     \tSoln\tCusts\tTrips\tCost\tValid");
 		
 		for (String base:shouldPass){
@@ -48,43 +45,24 @@ public class VRTests {
 			System.out.println(base+"------");
 			VRProblem vrp = new VRProblem(problemdir+base+"prob.csv");
 			VRSolution vrs = new VRSolution(vrp);
+			VRSolution vrps = new VRSolution(vrp);
 			VRSolution vrds = new VRSolution(vrp);
 
-			//Create a new solution using our poor algorithm
-			//vrs.oneRoutePerCustomerSolution();
-			vrs.clarkeWrightSolution();
-			vrds.oneRoutePerCustomerSolution();
-			
-			//System.out.printf("%s\t%s\t%d\t%.0f\t%s\n",base,"dumb",vrp.size(),vrs.solnCost(),vrs.verify());
-			//vrs.writeSVG(outdir+base+"prob.svg",outdir+base+"dmsn.svg");
-
 			//Print out results of costing and verifying the solution
+			vrds.oneRoutePerCustomerSolution();
 			System.out.printf("%s\t%s\t%d\t%d\t%.0f\t%s\n",base,"Dumb",vrp.size(),vrds.soln.size(),vrds.solnCost(),vrds.verify());
+			
+			vrs.clarkeWrightSolution(false);
 			System.out.printf("%s\t%s\t%d\t%d\t%.0f\t%s\n",base,"CW",vrp.size(),vrs.soln.size(),vrs.solnCost(),vrs.verify());
+			
+			vrps.clarkeWrightSolution(true);
+			System.out.printf("%s\t%s\t%d\t%d\t%.0f\t%s\n",base,"CWP",vrp.size(),vrps.soln.size(),vrps.solnCost(),vrps.verify());
 			
 			//Write the SVG file
 			vrds.writeSVG(outdir+base+"prob.svg",outdir+base+"dumbsn.svg");
 			vrs.writeSVG(outdir+base+"prob.svg",outdir+base+"cwsn.svg");
+			vrps.writeSVG(outdir+base+"prob.svg",outdir+base+"cwpsn.svg");
 		}
 		
-		System.out.println("\nShould Fail");
-		System.out.println("Problem     \tSoln\tCusts\tTrips\tCost\tValid");
-		for (String base:shouldFail){
-			VRProblem vrp = new VRProblem(problemdir+base+"prob.csv");
-			VRSolution vrs = new VRSolution(vrp);
-			VRSolution vrds = new VRSolution(vrp);
-			
-			vrs.clarkeWrightSolution();
-			vrds.oneRoutePerCustomerSolution();
-			
-			//Print out results of costing and verifying the solution
-			System.out.printf("%s\t%s\t%d\t%d\t%.0f\t%s\n",base,"Dumb",vrp.size(),vrds.soln.size(),vrds.solnCost(),vrds.verify());
-			System.out.printf("%s\t%s\t%d\t%d\t%.0f\t%s\n",base,"CW",vrp.size(),vrs.soln.size(),vrs.solnCost(),vrs.verify());
-			
-			//Write the SVG file
-			vrds.writeSVG(outdir+base+"prob.svg",outdir+base+"dumbsn.svg");
-			vrs.writeSVG(outdir+base+"prob.svg",outdir+base+"cwsn.svg");
-		}
-		System.out.println("\nDone");
 	}
 }
