@@ -215,20 +215,23 @@ public class ClarkeWright
 		}
 		//order pairs by savings
 		Collections.sort(pairs);
-
+		
+		HashSet<Route> routes = new HashSet<Route>();
+		routes.add(pairs.get(0));
+		pairs.remove(0);
+		
 		//start combining pairs into routes
-		for(int i=0; i<pairs.size(); i++)
-		{
-			Route ro = pairs.get(i);
-
-			for(int j=0; j<pairs.size(); j++){
-				Route r = pairs.get(j);
-				if(r ==ro) {continue;}
-				Customer c1 = r.customers.get(0);
-				Customer c2 = r.customers.get(r.customers.size()-1);
+		outerloop: for(int j=0; j<pairs.size(); j++){
+			Route r = pairs.get(j);
+			Customer c1 = r.customers.get(0);
+			Customer c2 = r.customers.get(r.customers.size()-1);
+			
+			for(Route ro :routes)
+			{
 				Customer cr1 = ro.customers.get(0);
 				Customer cr2 = ro.customers.get(ro.customers.size()-1);
-				boolean which = false;
+				
+
 				//do they have any common nodes?
 				if(c1 == cr1){
 					//could we combine these based on weight?
@@ -237,66 +240,79 @@ public class ClarkeWright
 						if(!ro.customers.contains(c2)){
 							ro.addCustomer(c2, true);
 							abandoned.remove(c2);
+							pairs.remove(r);
+							j--;
+							continue outerloop;
 						}
-						pairs.remove(r);
-						j--;
-						continue;
 					}
 				}else if (c1 == cr2){
 					if(c2.c + ro.getWeight() <= truckCapacity){
 						if(!ro.customers.contains(c2)){
 							ro.addCustomer(c2, false);
 							abandoned.remove(c2);
+							pairs.remove(r);
+							j--;
+							continue outerloop;
 						}
-						pairs.remove(r);
-						j--;
-						continue;
 					}
-				}else if (c2 == cr1){
-					which = true;
+				}
+				if (c2 == cr1){
 					if(c1.c + ro.getWeight() <= truckCapacity){
 						if(!ro.customers.contains(c1)){
 							ro.addCustomer(c1, true);
 							abandoned.remove(c1);
+							pairs.remove(r);
+							j--;
+							continue outerloop;
 						}
-						pairs.remove(r);
-						j--;
-						continue;
 					}
 				}else if (c2 ==cr2){
-					which = true;
 					if(c1.c + ro.getWeight() <= truckCapacity){
 						if(!ro.customers.contains(c1)){
 							ro.addCustomer(c1, false);
 							abandoned.remove(c1);
+							pairs.remove(r);
+							j--;
+							continue outerloop;
 						}
-						pairs.remove(r);
-						j--;
-						continue;
 					}	
 				}
-				
-				//If we reach here then the pair hasn't been added to a route 
-				if(Collections.disjoint(ro.customers, r.customers)){
-					//and none of the customers on it are in a previous route
-					//so we get to make a new one!
-					System.out.println("New route!");
-						abandoned.remove(c1);
-						abandoned.remove(c2);
-					continue;
-				}else{
-					//If we are here, then the pair hasn't been combined, but one of it's customers is already in a route
-					//so we put the unvisited customer in the safe zone and remove the route.
-					if(which){
-						abandoned.add(c1);
+			}
+			
+			//If we reach here then the pair hasn't been added to any routes
+			
+			boolean c = false;
+			ArrayList<Customer> notVisited = new ArrayList<Customer>();
+			
+			for(Route ro :routes)
+			{
+				for(Customer cc:r.customers){
+					if(ro.customers.contains(cc)){
+						c = true;
 					}else{
-						abandoned.add(c2);
+						notVisited.add(cc);
 					}
-					pairs.remove(r);
-					j--;
 				}
 			}
+			
+			if(!c){
+				//none of the customers on it are in a previous route
+				//so we get to make a new one!
+				System.out.println("New route!");
+				abandoned.remove(c1);
+				abandoned.remove(c2);
+				routes.add(r);
+			}else{
+				//one of it's customers is already in a route
+				//so we put the unvisited customer in the safe zone and remove the route.
+				abandoned.addAll(notVisited);
+			}
+			pairs.remove(r);
+			j--;
+			
 		}
+		
+		
 
 		//Edge case: A single Customer can be left out of all routes due to capacity constraints
 		// abandoned keeps track of all customers not attached to a route
@@ -309,7 +325,7 @@ public class ClarkeWright
 		}
 
 		//output
-		for(Route r:pairs){
+		for(Route r:routes){
 			ArrayList<Customer> l = new ArrayList<Customer>();
 			l.addAll(r.customers);
 			solution.add(l);
