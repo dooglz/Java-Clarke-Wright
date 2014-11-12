@@ -215,10 +215,15 @@ public class ClarkeWright
 		}
 		//order pairs by savings
 		Collections.sort(pairs);
+		for(Route ro :pairs)
+		{
+			System.out.println(System.identityHashCode(ro.customers.get(0))+" - "+ro.customers.get(0).c+"  :  "+ System.identityHashCode(ro.customers.get(1))+" - "+ro.customers.get(1).c);
+		}
+		
 		
 		HashSet<Route> routes = new HashSet<Route>();
 		routes.add(pairs.get(0));
-		pairs.remove(0);
+		Remove(pairs.get(0).customers.get(0),pairs.get(0).customers.get(1),pairs);
 		
 		//start combining pairs into routes
 		outerloop: for(int j=0; j<pairs.size(); j++){
@@ -240,8 +245,8 @@ public class ClarkeWright
 						if(!ro.customers.contains(c2)){
 							ro.addCustomer(c2, true);
 							abandoned.remove(c2);
-							pairs.remove(r);
-							j--;
+							Remove(c1,c2,pairs);
+							j=0;
 							continue outerloop;
 						}
 					}
@@ -250,8 +255,8 @@ public class ClarkeWright
 						if(!ro.customers.contains(c2)){
 							ro.addCustomer(c2, false);
 							abandoned.remove(c2);
-							pairs.remove(r);
-							j--;
+							Remove(c1,c2,pairs);
+							j=0;
 							continue outerloop;
 						}
 					}
@@ -261,8 +266,8 @@ public class ClarkeWright
 						if(!ro.customers.contains(c1)){
 							ro.addCustomer(c1, true);
 							abandoned.remove(c1);
-							pairs.remove(r);
-							j--;
+							Remove(c1,c2,pairs);
+							j=0;
 							continue outerloop;
 						}
 					}
@@ -271,8 +276,8 @@ public class ClarkeWright
 						if(!ro.customers.contains(c1)){
 							ro.addCustomer(c1, false);
 							abandoned.remove(c1);
-							pairs.remove(r);
-							j--;
+							Remove(c1,c2,pairs);
+							j=0;
 							continue outerloop;
 						}
 					}	
@@ -302,13 +307,15 @@ public class ClarkeWright
 				abandoned.remove(c1);
 				abandoned.remove(c2);
 				routes.add(r);
+				Remove(c1,c2,pairs);
 			}else{
 				//one of it's customers is already in a route
 				//so we put the unvisited customer in the safe zone and remove the route.
 				abandoned.addAll(notVisited);
+				pairs.remove(r);
 			}
-			pairs.remove(r);
-			j--;
+			
+			j=0;
 			
 		}
 		
@@ -333,6 +340,26 @@ public class ClarkeWright
 		return solution;
 	}
 	
+	private static void Remove(Customer c1, Customer c2, ArrayList<Route> routes)
+	{
+		 for(int i=0; i<routes.size(); i++){
+			Route r = routes.get(i);
+			if(c1 != null){
+				if(r.customers.contains(c1)){
+					routes.remove(i);
+					i--;
+					continue;
+				}
+			}
+			if(c2 != null){
+				if(r.customers.contains(c1)){
+					routes.remove(i);
+					i--;
+					continue;
+				}
+			}
+		}
+	}
 	
 }
 
