@@ -16,23 +16,24 @@ class Route implements Comparable<Route>
 		double newCost = 0;
 		double tempcost =0;
 		Customer prev = null;
-
+		
+		//Foreach customer in the route:
 		for(Customer c:customers){ 
+			// Distance from Depot
 			tempcost = Math.sqrt((c.x*c.x)+(c.y*c.y));
 			originalCost += (2.0*tempcost);
 
 			if(prev != null){
-				//distance from previous customer to this customer
+				// Distance from previous customer to this customer
 				double x = (prev.x - c.x);
 				double y = (prev.y - c.y);
 				newCost += Math.sqrt((x*x)+(y*y));
 			}else{
+				//If this is the first customer in the route, no change
 				newCost += tempcost;
 			}
-
 			prev = c;
 		}
-
 		newCost += tempcost;
 		_cost = newCost;
 		_savings = originalCost - newCost;
@@ -47,6 +48,7 @@ class Route implements Comparable<Route>
 	}
 
 	public void addCustomer(Customer c, boolean order){
+		//Add customer to the start or end of the route?
 		if(order){
 			customers.add(0,c);
 		}else{
@@ -56,7 +58,7 @@ class Route implements Comparable<Route>
 		if(c.c > _capacity){
 			System.out.println("Customer order too large");
 		}
-
+		
 		_weight += c.c;
 
 		if(_weight > _capacity){
@@ -146,7 +148,8 @@ public class ClarkeWright
 				}
 			}
 
-			//Remove any pairs that have any visited customers
+			//Remove any pairs that have visited customers
+			// Also keep a tab on any customers we remove
 			for(int j=i+1; j<pairs.size(); j++){				
 				Route r = pairs.get(j);
 				Customer c1 = r.customers.get(0);
@@ -175,8 +178,8 @@ public class ClarkeWright
 
 		}
 
-		//Edge case: A single Customer can get left out of all routes due to capacity constraints
-		//abandoned keeps track of all customers not attached to a route
+		//Edge case: A single Customer can be left out of all routes due to capacity constraints
+		// abandoned keeps track of all customers not attached to a route
 		for(Customer C:abandoned){
 			//we could tack this onto the end of a route if it would fit
 			//or just create a new route just for it. As per the Algorithm 

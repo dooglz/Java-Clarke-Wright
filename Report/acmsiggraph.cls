@@ -92,7 +92,7 @@
 
 % define things.
 
-\setlength{\textheight}{9.250in}
+\setlength{\textheight}{9.450in}
 \setlength{\textwidth}{7.000in}
 \setlength{\topmargin}{-0.700in}
 \setlength{\oddsidemargin}{-0.250in}
@@ -100,12 +100,12 @@
 \setlength{\columnsep}{1pc}
 \setlength{\headheight}{0.200in}
 \setlength{\headsep}{0.250in}
-\setlength{\footskip}{0.500in}
+\setlength{\footskip}{0.100in}
 
 % create a new length ``\ACMcopyrightspace'' and set its initial value.
 
 \newlength{\ACMcopyrightspace}
-\setlength{\ACMcopyrightspace}{3.3in}
+\setlength{\ACMcopyrightspace}{1.3in}
 
 % set the value of ``\ACMcopyrightspace'' based on the kind of document.
 
