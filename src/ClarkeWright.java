@@ -112,89 +112,64 @@ public class ClarkeWright
 		HashSet<Route> routes = new HashSet<Route>();
 		routes.add(pairs.get(0));
 		pairs.remove(0);
-		
+
 		//start combining pairs into routes
 		for(Route ro :routes)
-		{
-			Customer cr1 = ro.customers.get(0);
-			Customer cr2 = ro.customers.get(ro.customers.size()-1);
-			
-			for(int i=0; i<pairs.size(); i++){
+		{			
+			outerloop: for(int i=0; i<pairs.size(); i++){
 				Route r = pairs.get(i);
 				Customer c1 = r.customers.get(0);
 				Customer c2 = r.customers.get(r.customers.size()-1);
-				
-				//do they have any common nodes?
-				if(c1 == cr1 || c1 == cr2){
-					//could we combine these based on weight?
-					if(c2.c + ro.getWeight() <= truckCapacity){
-						//Does the route already contain BOTH these nodes?
-						if(!ro.customers.contains(c2)){
-							//no, but is it in another route already?
-							boolean istaken = false;
-							for(Route rr :routes)
-							{
-								if(rr.customers.contains(c2)){
-									istaken = true;
-									break;
+				Customer cr1 = ro.customers.get(0);
+				Customer cr2 = ro.customers.get(ro.customers.size()-1);
+
+				boolean edge = false;
+				for(int a=0; a<2;a++)
+				{
+					edge = !edge;
+					Customer e1 = (!edge) ? c1 : c2;
+					Customer e2 = (edge) ? c1 : c2;
+					//do they have any common nodes?
+					if(e1 == cr1 ||e1 == cr2){
+						//could we combine these based on weight?
+						if(e2.c + ro.getWeight() <= truckCapacity){
+							//Does the route already contain BOTH these nodes?
+							if(!ro.customers.contains(e2)){
+								//no, but is it in another route already?
+								boolean istaken = false;
+								for(Route rr :routes)
+								{
+									if(rr.customers.contains(e2)){
+										istaken = true;
+										break;
+									}
+								}
+								if(!istaken){
+									//No other route have this, add to route
+									if(e1 == cr1){
+										ro.addCustomer(e2, true);
+									}else{
+										ro.addCustomer(e2, false);
+									}
 								}
 							}
-							if(!istaken){
-								//No other route have this, add to route
-								if(c1 == cr1){
-									ro.addCustomer(c2, true);
-								}else{
-									ro.addCustomer(c2, false);
-								}
-							}
+							abandoned.remove(e2);
+							pairs.remove(r);
+							i--;
+							continue outerloop;
 						}
-						abandoned.remove(c2);
-						pairs.remove(r);
-						i--;
-						continue;
 					}
 				}
-				if (c2 == cr1 || c2 ==cr2){
-					//could we combine these based on weight?
-					if(c1.c + ro.getWeight() <= truckCapacity){
-						//Does the route already contain BOTH these nodes?
-						if(!ro.customers.contains(c1)){
-							//no, but is it in another route already?
-							boolean istaken = false;
-							for(Route rr :routes)
-							{
-								if(rr.customers.contains(c1)){
-									istaken = true;
-									break;
-								}
-							}
-							if(!istaken){
-								if(c2 == cr1){
-									ro.addCustomer(c1, true);
-								}else{
-									ro.addCustomer(c1, false);
-								}
-							}
-						}
-						abandoned.remove(c1);
-						pairs.remove(r);
-						i--;
-						continue;
-					}
-				}
-				
+
 				//If we reach here, the pair hasn't been added to any routes			
 				boolean a = false;
 				boolean b = false;
-				for(Route rr :routes)
-				{
-					for(Customer cc:r.customers){
-						if(rr.customers.contains(c1)){
-							a = true;
-						}
-						if(rr.customers.contains(c2)){
-							b = true;
-						}
+				for(Route rr :routes){
+					if(rr.customers.contains(c1)){
+						a = true;
+					}
+					if(rr.customers.contains(c2)){
+						b = true;
 					}
 				}
 				if(!(a||b)){
@@ -213,9 +188,8 @@ public class ClarkeWright
 				}
 				pairs.remove(r);
 				i--;
-				
 			}
-			
+
 		}
 
 		//Edge case: A single Customer can be left out of all routes due to capacity constraints
@@ -225,8 +199,8 @@ public class ClarkeWright
 				if(r.getWeight() + C.c < truckCapacity)
 				{
 					//would this be more efficient than sending a new truck?
-					Customer cc = r.customers.get(r.customers.size()-1);
-					{
+					Customer[] cca = {r.customers.get(r.customers.size()-1),r.customers.get(0)};
+					for(Customer cc:cca){
 						double X = C.x - cc.x;
 						double Y = C.y - cc.y;	
 						if(Math.sqrt((X*X)+(Y*Y)) < Math.sqrt((C.x*C.x)+(C.y*C.y))){
@@ -234,18 +208,9 @@ public class ClarkeWright
 							break outerloop;
 						}
 					}
-					cc  = r.customers.get(0);
-					{
-						double X = C.x - cc.x;
-						double Y = C.y - cc.y;	
-						if(Math.sqrt((X*X)+(Y*Y)) < Math.sqrt((C.x*C.x)+(C.y*C.y))){
-							r.addCustomer(C, true);
-							break outerloop;
-						}
-					}
 				}
 			}
-			
+
 			//Send a new truck, just for this Customer
 			ArrayList<Customer> l = new ArrayList<Customer>();
 			l.add(C);
@@ -260,7 +225,7 @@ public class ClarkeWright
 		}
 		return solution;
 	}
-	
+
 	//
 	//##Parallel solver##
 	//
@@ -297,79 +262,54 @@ public class ClarkeWright
 			{
 				Customer cr1 = ro.customers.get(0);
 				Customer cr2 = ro.customers.get(ro.customers.size()-1);
-
-				//do they have any common nodes?
-				if(c1 == cr1 || c1 == cr2){
-					//could we combine these based on weight?
-					if(c2.c + ro.getWeight() <= truckCapacity){
-						//Does the route already contain BOTH these nodes?
-						if(!ro.customers.contains(c2)){
-							//no, but is it in another route already?
-							boolean istaken = false;
-							for(Route rr :routes)
-							{
-								if(rr.customers.contains(c2)){
-									istaken = true;
-									break;
+				boolean edge = false;
+				for(int a=0; a<2;a++)
+				{
+					edge = !edge;
+					Customer e1 = (!edge) ? c1 : c2;
+					Customer e2 = (edge) ? c1 : c2;
+					//do they have any common nodes?
+					if(e1 == cr1 || e1 == cr2){
+						//could we combine these based on weight?
+						if(e2.c + ro.getWeight() <= truckCapacity){
+							//Does the route already contain BOTH these nodes?
+							if(!ro.customers.contains(e2)){
+								//no, but is it in another route already?
+								boolean istaken = false;
+								for(Route rr :routes){
+									if(rr.customers.contains(e2)){
+										istaken = true;
+										break;
+									}
+								}
+								if(!istaken){
+									//No other route have this, add to route.
+									if(c1 == cr1){
+										ro.addCustomer(e2, true);
+									}else{
+										ro.addCustomer(e2, false);
+									}
 								}
 							}
-							if(!istaken){
-								//No other route have this, add to route.
-								if(c1 == cr1){
-									ro.addCustomer(c2, true);
-								}else{
-									ro.addCustomer(c2, false);
-								}
-							}
+							abandoned.remove(e2);
+							pairs.remove(r);
+							j--;
+							continue outerloop;
 						}
-						abandoned.remove(c2);
-						pairs.remove(r);
-						j--;
-						continue outerloop;
 					}
 				}
-				if (c2 == cr1 || c2 ==cr2){
-					//could we combine these based on weight?
-					if(c1.c + ro.getWeight() <= truckCapacity){
-						//Does the route already contain BOTH these nodes?
-						if(!ro.customers.contains(c1)){
-							//no, but is it in another route already?
-							boolean istaken = false;
-							for(Route rr :routes)
-							{
-								if(rr.customers.contains(c1)){
-									istaken = true;
-									break;
-								}
-							}
-							if(!istaken){
-								if(c2 == cr1){
-									ro.addCustomer(c1, true);
-								}else{
-									ro.addCustomer(c1, false);
-								}
-							}
-						}
-						abandoned.remove(c1);
-						pairs.remove(r);
-						j--;
-						continue outerloop;
-					}
-				}
+				
 			}
 
 			//If we reach here, the pair hasn't been added to any routes			
 			boolean a = false;
 			boolean b = false;
-			for(Route ro :routes)
-			{
-				for(Customer cc:r.customers){
-					if(ro.customers.contains(c1)){
-						a = true;
-					}
-					if(ro.customers.contains(c2)){
-						b = true;
-					}
+			for(Route ro :routes){
+				if(ro.customers.contains(c1)){
+					a = true;
+				}
+				if(ro.customers.contains(c2)){
+					b = true;
 				}
 			}
 			if(!(a||b)){
@@ -398,8 +338,8 @@ public class ClarkeWright
 				if(r.getWeight() + C.c < truckCapacity)
 				{
 					//would this be more efficient than sending a new truck?
-					Customer cc = r.customers.get(r.customers.size()-1);
-					{
+					Customer[] cca = {r.customers.get(r.customers.size()-1),r.customers.get(0)};
+					for(Customer cc:cca){
 						double X = C.x - cc.x;
 						double Y = C.y - cc.y;	
 						if(Math.sqrt((X*X)+(Y*Y)) < Math.sqrt((C.x*C.x)+(C.y*C.y))){
@@ -407,18 +347,9 @@ public class ClarkeWright
 							break outerloop;
 						}
 					}
-					cc  = r.customers.get(0);
-					{
-						double X = C.x - cc.x;
-						double Y = C.y - cc.y;	
-						if(Math.sqrt((X*X)+(Y*Y)) < Math.sqrt((C.x*C.x)+(C.y*C.y))){
-							r.addCustomer(C, true);
-							break outerloop;
-						}
-					}
 				}
 			}
-			
+
 			//Send a new truck, just for this Customer
 			ArrayList<Customer> l = new ArrayList<Customer>();
 			l.add(C);
