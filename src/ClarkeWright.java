@@ -16,7 +16,7 @@ class Route implements Comparable<Route>
 		double newCost = 0;
 		double tempcost =0;
 		Customer prev = null;
-		
+
 		//Foreach customer in the route:
 		for(Customer c:customers){ 
 			// Distance from Depot
@@ -58,7 +58,7 @@ class Route implements Comparable<Route>
 		if(c.c > _capacity){
 			System.out.println("Customer order too large");
 		}
-		
+
 		_weight += c.c;
 
 		if(_weight > _capacity){
@@ -196,7 +196,7 @@ public class ClarkeWright
 		}
 		return solution;
 	}
-	
+
 	public static ArrayList<List<Customer>> solveP(ArrayList<Customer> customers){
 		ArrayList<List<Customer>> solution = new ArrayList<List<Customer>>();
 		HashSet<Customer> abandoned = new HashSet<Customer>();
@@ -214,22 +214,22 @@ public class ClarkeWright
 		}
 		//order pairs by savings
 		Collections.sort(pairs);		
-		
+
 		HashSet<Route> routes = new HashSet<Route>();
 		routes.add(pairs.get(0));
 		pairs.remove(0);
-		
+
 		//start combining pairs into routes
 		outerloop: for(int j=0; j<pairs.size(); j++){
 			Route r = pairs.get(j);
 			Customer c1 = r.customers.get(0);
 			Customer c2 = r.customers.get(r.customers.size()-1);
-			
+
 			for(Route ro :routes)
 			{
 				Customer cr1 = ro.customers.get(0);
 				Customer cr2 = ro.customers.get(ro.customers.size()-1);
-				
+
 				//do they have any common nodes?
 				if(c1 == cr1 || c1 == cr2){
 					//could we combine these based on weight?
@@ -289,7 +289,7 @@ public class ClarkeWright
 					}
 				}
 			}
-			
+
 			//If we reach here then the pair hasn't been added to any routes			
 			boolean a = false;
 			boolean b = false;
@@ -320,15 +320,38 @@ public class ClarkeWright
 			}
 			pairs.remove(r);
 			j--;
-			
+
 		}
-		
-		
+
 		//Edge case: A single Customer can be left out of all routes due to capacity constraints
-		// abandoned keeps track of all customers not attached to a route
-		for(Customer C:abandoned){
+		outerloop:for(Customer C:abandoned){
 			//we could tack this onto the end of a route if it would fit
-			//or just create a new route just for it. As per the Algorithm 
+			for(Route r:routes){
+				if(r.getWeight() + C.c < truckCapacity)
+				{
+					//would this be more efficient than sending a new truck?
+					Customer cc = r.customers.get(r.customers.size());
+					{
+						double X = C.x - cc.x;
+						double Y = C.y - cc.y;	
+						if(Math.sqrt((X*X)+(Y*Y)) < Math.sqrt((C.x*C.x)+(C.y*C.y))){
+							r.addCustomer(C, false);
+							break outerloop;
+						}
+					}
+					cc  = r.customers.get(0);
+					{
+						double X = C.x - cc.x;
+						double Y = C.y - cc.y;	
+						if(Math.sqrt((X*X)+(Y*Y)) < Math.sqrt((C.x*C.x)+(C.y*C.y))){
+							r.addCustomer(C, true);
+							break outerloop;
+						}
+					}
+				}
+			}
+			
+			//Send a new truck, just for this Customer
 			ArrayList<Customer> l = new ArrayList<Customer>();
 			l.add(C);
 			solution.add(l);
@@ -342,10 +365,10 @@ public class ClarkeWright
 		}
 		return solution;
 	}
-	
+
 	private static void Remove(Customer c1, Customer c2, ArrayList<Route> routes)
 	{
-		 for(int i=0; i<routes.size(); i++){
+		for(int i=0; i<routes.size(); i++){
 			Route r = routes.get(i);
 			if(c1 != null){
 				if(r.customers.contains(c1)){
@@ -363,7 +386,7 @@ public class ClarkeWright
 			}
 		}
 	}
-	
+
 }
 
 

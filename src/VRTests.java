@@ -7,8 +7,8 @@ public class VRTests {
 		String problemdir = "tests/";
 		String outdir = "output/";
 		String [] shouldPass = {
-			//	"rand00010",
-				"rand00020"/*,
+				"rand00010",
+				"rand00020",
 				"rand00030",
 				"rand00040",
 				"rand00050",
@@ -36,7 +36,7 @@ public class VRTests {
 				"rand00950",
 				"rand01000",
 				"fail00002",
-				"fail00004"*/
+				"fail00004"
 				};
 		System.out.println("Problem     \tSoln\tCusts\tTrips\tCost\tValid");
 		
