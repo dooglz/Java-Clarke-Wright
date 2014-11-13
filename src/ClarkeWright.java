@@ -83,6 +83,10 @@ class Route implements Comparable<Route>
 
 }
 
+//
+//##Sequential solver##
+//
+
 public class ClarkeWright 
 {
 	public static int truckCapacity = 0;
@@ -124,7 +128,7 @@ public class ClarkeWright
 				if(c1 == cr1 || c1 == cr2){
 					//could we combine these based on weight?
 					if(c2.c + ro.getWeight() <= truckCapacity){
-						//Does the route already contain BOTH these nodes already?
+						//Does the route already contain BOTH these nodes?
 						if(!ro.customers.contains(c2)){
 							//no, but is it in another route already?
 							boolean istaken = false;
@@ -136,7 +140,7 @@ public class ClarkeWright
 								}
 							}
 							if(!istaken){
-								//No other route has this customer, add to route, remove pair.
+								//No other route have this, add to route
 								if(c1 == cr1){
 									ro.addCustomer(c2, true);
 								}else{
@@ -153,7 +157,7 @@ public class ClarkeWright
 				if (c2 == cr1 || c2 ==cr2){
 					//could we combine these based on weight?
 					if(c1.c + ro.getWeight() <= truckCapacity){
-						//Does the route already contain BOTH these nodes already?
+						//Does the route already contain BOTH these nodes?
 						if(!ro.customers.contains(c1)){
 							//no, but is it in another route already?
 							boolean istaken = false;
@@ -179,7 +183,7 @@ public class ClarkeWright
 					}
 				}
 				
-				//If we reach here then the pair hasn't been added to any routes			
+				//If we reach here, the pair hasn't been added to any routes			
 				boolean a = false;
 				boolean b = false;
 				for(Route rr :routes)
@@ -194,8 +198,7 @@ public class ClarkeWright
 					}
 				}
 				if(!(a||b)){
-					//no routes have any of these customers, create a new route
-					//on the next run
+					//no routes have any of these customers, make new route
 					abandoned.remove(c1);
 					abandoned.remove(c2);
 					routes.add(r);
@@ -257,6 +260,10 @@ public class ClarkeWright
 		}
 		return solution;
 	}
+	
+	//
+	//##Parallel solver##
+	//
 
 	public static ArrayList<List<Customer>> solveP(ArrayList<Customer> customers){
 		ArrayList<List<Customer>> solution = new ArrayList<List<Customer>>();
@@ -295,7 +302,7 @@ public class ClarkeWright
 				if(c1 == cr1 || c1 == cr2){
 					//could we combine these based on weight?
 					if(c2.c + ro.getWeight() <= truckCapacity){
-						//Does the route already contain BOTH these nodes already?
+						//Does the route already contain BOTH these nodes?
 						if(!ro.customers.contains(c2)){
 							//no, but is it in another route already?
 							boolean istaken = false;
@@ -307,7 +314,7 @@ public class ClarkeWright
 								}
 							}
 							if(!istaken){
-								//No other route has this customer, add to route, remove pair.
+								//No other route have this, add to route.
 								if(c1 == cr1){
 									ro.addCustomer(c2, true);
 								}else{
@@ -324,7 +331,7 @@ public class ClarkeWright
 				if (c2 == cr1 || c2 ==cr2){
 					//could we combine these based on weight?
 					if(c1.c + ro.getWeight() <= truckCapacity){
-						//Does the route already contain BOTH these nodes already?
+						//Does the route already contain BOTH these nodes?
 						if(!ro.customers.contains(c1)){
 							//no, but is it in another route already?
 							boolean istaken = false;
@@ -351,7 +358,7 @@ public class ClarkeWright
 				}
 			}
 
-			//If we reach here then the pair hasn't been added to any routes			
+			//If we reach here, the pair hasn't been added to any routes			
 			boolean a = false;
 			boolean b = false;
 			for(Route ro :routes)
@@ -366,7 +373,7 @@ public class ClarkeWright
 				}
 			}
 			if(!(a||b)){
-				//no routes have any of these customers, New Route!
+				//no routes have any of these customers, make new route
 				abandoned.remove(c1);
 				abandoned.remove(c2);
 				routes.add(r);
@@ -426,28 +433,6 @@ public class ClarkeWright
 		}
 		return solution;
 	}
-
-	private static void Remove(Customer c1, Customer c2, ArrayList<Route> routes)
-	{
-		for(int i=0; i<routes.size(); i++){
-			Route r = routes.get(i);
-			if(c1 != null){
-				if(r.customers.contains(c1)){
-					routes.remove(i);
-					i--;
-					continue;
-				}
-			}
-			if(c2 != null){
-				if(r.customers.contains(c1)){
-					routes.remove(i);
-					i--;
-					continue;
-				}
-			}
-		}
-	}
-
 }
 
 
