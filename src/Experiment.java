@@ -5,6 +5,15 @@ public class Experiment {
 		String outdir = "output/";
 		String problemdir = "tests/";
 		String [] probs = {
+				"rand00010",
+				"rand00020",
+				"rand00030",
+				"rand00040",
+				"rand00050",
+				"rand00060",
+				"rand00070",
+				"rand00080",
+				"rand00090",
 				"rand00100",
 				"rand00150",
 				"rand00200",
@@ -23,7 +32,9 @@ public class Experiment {
 				"rand00850",
 				"rand00900",
 				"rand00950",
-				"rand01000"
+				"rand01000",
+				"fail00002",
+				"fail00004"
 				};
 		for (String f:probs){
 			ArrayList<Long> timing = new ArrayList<Long>();
@@ -38,7 +49,7 @@ public class Experiment {
 				System.out.print(delta+", ");
 			}
 			System.out.print("\n\n");
-			vrs.writeOut(outdir+f+"CWsn.csv");
+			//vrs.writeOut(outdir+f+"CWsn.csv");
 		}
 		
 	}

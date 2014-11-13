@@ -89,7 +89,6 @@ public class ClarkeWright
 
 	public static ArrayList<List<Customer>> solve(ArrayList<Customer> customers){
 		ArrayList<List<Customer>> solution = new ArrayList<List<Customer>>();
-
 		HashSet<Customer> abandoned = new HashSet<Customer>();
 
 		//calculate the savings of all the pairs
@@ -104,92 +103,154 @@ public class ClarkeWright
 			}
 		}
 		//order pairs by savings
-		Collections.sort(pairs);
+		Collections.sort(pairs);		
 
+		HashSet<Route> routes = new HashSet<Route>();
+		routes.add(pairs.get(0));
+		pairs.remove(0);
+		
 		//start combining pairs into routes
-		for(int i=0; i<pairs.size(); i++)
+		for(Route ro :routes)
 		{
-			Route ro = pairs.get(i);
-
-			for(int j=i+1; j<pairs.size(); j++){
-				Route r = pairs.get(j);
+			Customer cr1 = ro.customers.get(0);
+			Customer cr2 = ro.customers.get(ro.customers.size()-1);
+			
+			for(int i=0; i<pairs.size(); i++){
+				Route r = pairs.get(i);
 				Customer c1 = r.customers.get(0);
 				Customer c2 = r.customers.get(r.customers.size()-1);
-				Customer cr1 = ro.customers.get(0);
-				Customer cr2 = ro.customers.get(ro.customers.size()-1);
-
+				
 				//do they have any common nodes?
-				if(c1 == cr1){
+				if(c1 == cr1 || c1 == cr2){
 					//could we combine these based on weight?
 					if(c2.c + ro.getWeight() <= truckCapacity){
 						//Does the route already contain BOTH these nodes already?
 						if(!ro.customers.contains(c2)){
-							ro.addCustomer(c2, true);
+							//no, but is it in another route already?
+							boolean istaken = false;
+							for(Route rr :routes)
+							{
+								if(rr.customers.contains(c2)){
+									istaken = true;
+									break;
+								}
+							}
+							if(!istaken){
+								//No other route has this customer, add to route, remove pair.
+								if(c1 == cr1){
+									ro.addCustomer(c2, true);
+								}else{
+									ro.addCustomer(c2, false);
+								}
+							}
 						}
-					}
-				}else if (c1 == cr2){
-					if(c2.c + ro.getWeight() <= truckCapacity){
-						if(!ro.customers.contains(c2)){
-							ro.addCustomer(c2, false);
-						}
-					}
-				}else if (c2 == cr1){
-					if(c1.c + ro.getWeight() <= truckCapacity){
-						if(!ro.customers.contains(c1)){
-							ro.addCustomer(c1, true);
-						}
-					}
-				}else if (c2 ==cr2){
-					if(c1.c + ro.getWeight() <= truckCapacity){
-						if(!ro.customers.contains(c1)){
-							ro.addCustomer(c1, false);
-						}
-					}
-				}
-			}
-
-			//Remove any pairs that have visited customers
-			// Also keep a tab on any customers we remove
-			for(int j=i+1; j<pairs.size(); j++){				
-				Route r = pairs.get(j);
-				Customer c1 = r.customers.get(0);
-				Customer c2 = r.customers.get(1);
-				byte a = 0;
-				if(ro.customers.contains(c1)){
-					a+=1;
-				}
-				if(ro.customers.contains(c2)){
-					a+=2;
-				}
-				if(a>0){
-					if(a == 1){
-						abandoned.add(c2);
-					}else if(a == 2){
-						abandoned.add(c1);
-					}else if(a == 3){
-						abandoned.remove(c1);
 						abandoned.remove(c2);
+						pairs.remove(r);
+						i--;
+						continue;
 					}
-					pairs.remove(r);
-					j--;
 				}
-
+				if (c2 == cr1 || c2 ==cr2){
+					//could we combine these based on weight?
+					if(c1.c + ro.getWeight() <= truckCapacity){
+						//Does the route already contain BOTH these nodes already?
+						if(!ro.customers.contains(c1)){
+							//no, but is it in another route already?
+							boolean istaken = false;
+							for(Route rr :routes)
+							{
+								if(rr.customers.contains(c1)){
+									istaken = true;
+									break;
+								}
+							}
+							if(!istaken){
+								if(c2 == cr1){
+									ro.addCustomer(c1, true);
+								}else{
+									ro.addCustomer(c1, false);
+								}
+							}
+						}
+						abandoned.remove(c1);
+						pairs.remove(r);
+						i--;
+						continue;
+					}
+				}
+				
+				//If we reach here then the pair hasn't been added to any routes			
+				boolean a = false;
+				boolean b = false;
+				for(Route rr :routes)
+				{
+					for(Customer cc:r.customers){
+						if(rr.customers.contains(c1)){
+							a = true;
+						}
+						if(rr.customers.contains(c2)){
+							b = true;
+						}
+					}
+				}
+				if(!(a||b)){
+					//no routes have any of these customers, create a new route
+					//on the next run
+					abandoned.remove(c1);
+					abandoned.remove(c2);
+					routes.add(r);
+				}else{
+					//Some routes have some of these customers already
+					if(!a){
+						abandoned.add(c1);
+					}
+					if(!b){
+						abandoned.add(c2);
+					}
+				}
+				pairs.remove(r);
+				i--;
+				
 			}
-
+			
 		}
 
 		//Edge case: A single Customer can be left out of all routes due to capacity constraints
-		// abandoned keeps track of all customers not attached to a route
-		for(Customer C:abandoned){
+		outerloop:for(Customer C:abandoned){
 			//we could tack this onto the end of a route if it would fit
-			//or just create a new route just for it. As per the Algorithm 
+			for(Route r:routes){
+				if(r.getWeight() + C.c < truckCapacity)
+				{
+					//would this be more efficient than sending a new truck?
+					Customer cc = r.customers.get(r.customers.size()-1);
+					{
+						double X = C.x - cc.x;
+						double Y = C.y - cc.y;	
+						if(Math.sqrt((X*X)+(Y*Y)) < Math.sqrt((C.x*C.x)+(C.y*C.y))){
+							r.addCustomer(C, false);
+							break outerloop;
+						}
+					}
+					cc  = r.customers.get(0);
+					{
+						double X = C.x - cc.x;
+						double Y = C.y - cc.y;	
+						if(Math.sqrt((X*X)+(Y*Y)) < Math.sqrt((C.x*C.x)+(C.y*C.y))){
+							r.addCustomer(C, true);
+							break outerloop;
+						}
+					}
+				}
+			}
+			
+			//Send a new truck, just for this Customer
 			ArrayList<Customer> l = new ArrayList<Customer>();
 			l.add(C);
 			solution.add(l);
 		}
 
 		//output
-		for(Route r:pairs){
+		for(Route r:routes){
 			ArrayList<Customer> l = new ArrayList<Customer>();
 			l.addAll(r.customers);
 			solution.add(l);
@@ -330,7 +391,7 @@ public class ClarkeWright
 				if(r.getWeight() + C.c < truckCapacity)
 				{
 					//would this be more efficient than sending a new truck?
-					Customer cc = r.customers.get(r.customers.size());
+					Customer cc = r.customers.get(r.customers.size()-1);
 					{
 						double X = C.x - cc.x;
 						double Y = C.y - cc.y;	
