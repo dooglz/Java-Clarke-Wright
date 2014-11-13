@@ -1,190 +1,190 @@
-Customer1 - 10  :  Customer2 - 2
-Customer3 - 6  :  Customer2 - 2
-Customer1 - 10  :  Customer3 - 6
-Customer3 - 6  :  Customer4 - 3
-Customer5 - 9  :  Customer3 - 6
-Customer5 - 9  :  Customer2 - 2
-Customer2 - 2  :  Customer4 - 3
-Customer1 - 10  :  Customer5 - 9
-Customer1 - 10  :  Customer4 - 3
-Customer5 - 9  :  Customer4 - 3
-Customer6 - 2  :  Customer7 - 2
-Customer8 - 4  :  Customer4 - 3
-Customer9 - 8  :  Customer8 - 4
-Customer10 - 7  :  Customer6 - 2
-Customer8 - 4  :  Customer2 - 2
-Customer8 - 4  :  Customer3 - 6
-Customer1 - 10  :  Customer6 - 2
-Customer10 - 7  :  Customer7 - 2
-Customer1 - 10  :  Customer8 - 4
-Customer6 - 2  :  Customer2 - 2
-Customer9 - 8  :  Customer4 - 3
-Customer5 - 9  :  Customer8 - 4
-Customer11 - 8  :  Customer4 - 3
-Customer11 - 8  :  Customer8 - 4
-Customer9 - 8  :  Customer3 - 6
-Customer11 - 8  :  Customer3 - 6
-Customer9 - 8  :  Customer2 - 2
-Customer11 - 8  :  Customer2 - 2
-Customer1 - 10  :  Customer7 - 2
-Customer9 - 8  :  Customer11 - 8
-Customer1 - 10  :  Customer9 - 8
-Customer5 - 9  :  Customer11 - 8
-Customer1 - 10  :  Customer12 - 1
-Customer1 - 10  :  Customer11 - 8
-Customer12 - 1  :  Customer2 - 2
-Customer6 - 2  :  Customer3 - 6
-Customer10 - 7  :  Customer1 - 10
-Customer7 - 2  :  Customer2 - 2
-Customer5 - 9  :  Customer9 - 8
-Customer5 - 9  :  Customer12 - 1
-Customer10 - 7  :  Customer2 - 2
-Customer12 - 1  :  Customer3 - 6
-Customer6 - 2  :  Customer5 - 9
-Customer7 - 2  :  Customer14 - 10
-Customer13 - 5  :  Customer6 - 2
-Customer12 - 1  :  Customer4 - 3
-Customer10 - 7  :  Customer13 - 5
-Customer10 - 7  :  Customer14 - 10
-Customer6 - 2  :  Customer14 - 10
-Customer13 - 5  :  Customer7 - 2
-Customer6 - 2  :  Customer4 - 3
-Customer6 - 2  :  Customer12 - 1
-Customer10 - 7  :  Customer3 - 6
-Customer7 - 2  :  Customer3 - 6
-Customer10 - 7  :  Customer5 - 9
-Customer1 - 10  :  Customer13 - 5
-Customer6 - 2  :  Customer15 - 6
-Customer13 - 5  :  Customer15 - 6
-Customer13 - 5  :  Customer2 - 2
-Customer5 - 9  :  Customer7 - 2
-Customer10 - 7  :  Customer15 - 6
-Customer12 - 1  :  Customer11 - 8
-Customer12 - 1  :  Customer8 - 4
-Customer1 - 10  :  Customer15 - 6
-Customer10 - 7  :  Customer12 - 1
-Customer13 - 5  :  Customer14 - 10
-Customer16 - 3  :  Customer4 - 3
-Customer16 - 3  :  Customer11 - 8
-Customer15 - 6  :  Customer2 - 2
-Customer7 - 2  :  Customer15 - 6
-Customer16 - 3  :  Customer3 - 6
-Customer16 - 3  :  Customer5 - 9
-Customer16 - 3  :  Customer8 - 4
-Customer16 - 3  :  Customer2 - 2
-Customer7 - 2  :  Customer12 - 1
-Customer13 - 5  :  Customer12 - 1
-Customer1 - 10  :  Customer16 - 3
-Customer13 - 5  :  Customer3 - 6
-Customer12 - 1  :  Customer15 - 6
-Customer13 - 5  :  Customer5 - 9
-Customer10 - 7  :  Customer4 - 3
-Customer16 - 3  :  Customer9 - 8
-Customer5 - 9  :  Customer15 - 6
-Customer3 - 6  :  Customer15 - 6
-Customer7 - 2  :  Customer4 - 3
-Customer12 - 1  :  Customer9 - 8
-Customer1 - 10  :  Customer14 - 10
-Customer14 - 10  :  Customer2 - 2
-Customer14 - 10  :  Customer15 - 6
-Customer6 - 2  :  Customer8 - 4
-Customer16 - 3  :  Customer12 - 1
-Customer13 - 5  :  Customer4 - 3
-Customer6 - 2  :  Customer11 - 8
-Customer15 - 6  :  Customer4 - 3
-Customer17 - 10  :  Customer11 - 8
-Customer14 - 10  :  Customer3 - 6
-Customer17 - 10  :  Customer8 - 4
-Customer12 - 1  :  Customer14 - 10
-Customer5 - 9  :  Customer14 - 10
-Customer17 - 10  :  Customer4 - 3
-Customer17 - 10  :  Customer9 - 8
-Customer16 - 3  :  Customer17 - 10
-Customer6 - 2  :  Customer9 - 8
-Customer17 - 10  :  Customer3 - 6
-Customer10 - 7  :  Customer8 - 4
-Customer17 - 10  :  Customer5 - 9
-Customer10 - 7  :  Customer11 - 8
-Customer17 - 10  :  Customer2 - 2
-Customer1 - 10  :  Customer17 - 10
-Customer12 - 1  :  Customer18 - 1
-Customer1 - 10  :  Customer18 - 1
-Customer18 - 1  :  Customer2 - 2
-Customer11 - 8  :  Customer15 - 6
-Customer7 - 2  :  Customer8 - 4
-Customer5 - 9  :  Customer18 - 1
-Customer13 - 5  :  Customer11 - 8
-Customer18 - 1  :  Customer3 - 6
-Customer7 - 2  :  Customer11 - 8
-Customer6 - 2  :  Customer16 - 3
-Customer8 - 4  :  Customer15 - 6
-Customer13 - 5  :  Customer8 - 4
-Customer14 - 10  :  Customer4 - 3
-Customer18 - 1  :  Customer15 - 6
-Customer18 - 1  :  Customer4 - 3
-Customer6 - 2  :  Customer18 - 1
-Customer17 - 10  :  Customer12 - 1
-Customer13 - 5  :  Customer18 - 1
-Customer16 - 3  :  Customer15 - 6
-Customer10 - 7  :  Customer9 - 8
-Customer10 - 7  :  Customer18 - 1
-Customer18 - 1  :  Customer11 - 8
-Customer10 - 7  :  Customer16 - 3
-Customer13 - 5  :  Customer16 - 3
-Customer9 - 8  :  Customer15 - 6
-Customer16 - 3  :  Customer18 - 1
-Customer13 - 5  :  Customer9 - 8
-Customer7 - 2  :  Customer9 - 8
-Customer7 - 2  :  Customer18 - 1
-Customer18 - 1  :  Customer8 - 4
-Customer16 - 3  :  Customer7 - 2
-Customer18 - 1  :  Customer9 - 8
-Customer18 - 1  :  Customer14 - 10
-Customer14 - 10  :  Customer11 - 8
-Customer17 - 10  :  Customer18 - 1
-Customer14 - 10  :  Customer8 - 4
-Customer6 - 2  :  Customer17 - 10
-Customer17 - 10  :  Customer15 - 6
-Customer16 - 3  :  Customer14 - 10
-Customer13 - 5  :  Customer17 - 10
-Customer10 - 7  :  Customer17 - 10
-Customer9 - 8  :  Customer14 - 10
-Customer19 - 2  :  Customer8 - 4
-Customer19 - 2  :  Customer9 - 8
-Customer19 - 2  :  Customer17 - 10
-Customer17 - 10  :  Customer7 - 2
-Customer19 - 2  :  Customer11 - 8
-Customer19 - 2  :  Customer4 - 3
-Customer19 - 2  :  Customer16 - 3
-Customer19 - 2  :  Customer3 - 6
-Customer19 - 2  :  Customer5 - 9
-Customer19 - 2  :  Customer2 - 2
-Customer19 - 2  :  Customer1 - 10
-Customer17 - 10  :  Customer14 - 10
-Customer19 - 2  :  Customer12 - 1
-Customer19 - 2  :  Customer18 - 1
-Customer19 - 2  :  Customer15 - 6
-Customer19 - 2  :  Customer6 - 2
-Customer19 - 2  :  Customer13 - 5
-Customer19 - 2  :  Customer10 - 7
-Customer19 - 2  :  Customer7 - 2
-Customer19 - 2  :  Customer14 - 10
-Customer20 - 2  :  Customer17 - 10
-Customer20 - 2  :  Customer11 - 8
-Customer20 - 2  :  Customer8 - 4
-Customer20 - 2  :  Customer16 - 3
-Customer19 - 2  :  Customer20 - 2
-Customer20 - 2  :  Customer9 - 8
-Customer20 - 2  :  Customer4 - 3
-Customer20 - 2  :  Customer3 - 6
-Customer20 - 2  :  Customer5 - 9
-Customer20 - 2  :  Customer2 - 2
-Customer1 - 10  :  Customer20 - 2
-Customer20 - 2  :  Customer12 - 1
-Customer20 - 2  :  Customer18 - 1
-Customer20 - 2  :  Customer15 - 6
-Customer13 - 5  :  Customer20 - 2
-Customer6 - 2  :  Customer20 - 2
-Customer10 - 7  :  Customer20 - 2
-Customer20 - 2  :  Customer7 - 2
-Customer20 - 2  :  Customer14 - 10
+Customer1(10)	-	Customer2(2)
+Customer3(6)	-	Customer2(2)
+Customer1(10)	-	Customer3(6)
+Customer3(6)	-	Customer4(3)
+Customer5(9)	-	Customer3(6)
+Customer5(9)	-	Customer2(2)
+Customer2(2)	-	Customer4(3)
+Customer1(10)	-	Customer5(9)
+Customer1(10)	-	Customer4(3)
+Customer5(9)	-	Customer4(3)
+Customer6(2)	-	Customer7(2)
+Customer8(4)	-	Customer4(3)
+Customer9(8)	-	Customer8(4)
+Customer10(7)	-	Customer6(2)
+Customer8(4)	-	Customer2(2)
+Customer8(4)	-	Customer3(6)
+Customer1(10)	-	Customer6(2)
+Customer10(7)	-	Customer7(2)
+Customer1(10)	-	Customer8(4)
+Customer6(2)	-	Customer2(2)
+Customer9(8)	-	Customer4(3)
+Customer5(9)	-	Customer8(4)
+Customer11(8)	-	Customer4(3)
+Customer11(8)	-	Customer8(4)
+Customer9(8)	-	Customer3(6)
+Customer11(8)	-	Customer3(6)
+Customer9(8)	-	Customer2(2)
+Customer11(8)	-	Customer2(2)
+Customer1(10)	-	Customer7(2)
+Customer9(8)	-	Customer11(8)
+Customer1(10)	-	Customer9(8)
+Customer5(9)	-	Customer11(8)
+Customer1(10)	-	Customer12(1)
+Customer1(10)	-	Customer11(8)
+Customer12(1)	-	Customer2(2)
+Customer6(2)	-	Customer3(6)
+Customer10(7)	-	Customer1(10)
+Customer7(2)	-	Customer2(2)
+Customer5(9)	-	Customer9(8)
+Customer5(9)	-	Customer12(1)
+Customer10(7)	-	Customer2(2)
+Customer12(1)	-	Customer3(6)
+Customer6(2)	-	Customer5(9)
+Customer7(2)	-	Customer14(10)
+Customer13(5)	-	Customer6(2)
+Customer12(1)	-	Customer4(3)
+Customer10(7)	-	Customer13(5)
+Customer10(7)	-	Customer14(10)
+Customer6(2)	-	Customer14(10)
+Customer13(5)	-	Customer7(2)
+Customer6(2)	-	Customer4(3)
+Customer6(2)	-	Customer12(1)
+Customer10(7)	-	Customer3(6)
+Customer7(2)	-	Customer3(6)
+Customer10(7)	-	Customer5(9)
+Customer1(10)	-	Customer13(5)
+Customer6(2)	-	Customer15(6)
+Customer13(5)	-	Customer15(6)
+Customer13(5)	-	Customer2(2)
+Customer5(9)	-	Customer7(2)
+Customer10(7)	-	Customer15(6)
+Customer12(1)	-	Customer11(8)
+Customer12(1)	-	Customer8(4)
+Customer1(10)	-	Customer15(6)
+Customer10(7)	-	Customer12(1)
+Customer13(5)	-	Customer14(10)
+Customer16(3)	-	Customer4(3)
+Customer16(3)	-	Customer11(8)
+Customer15(6)	-	Customer2(2)
+Customer7(2)	-	Customer15(6)
+Customer16(3)	-	Customer3(6)
+Customer16(3)	-	Customer5(9)
+Customer16(3)	-	Customer8(4)
+Customer16(3)	-	Customer2(2)
+Customer7(2)	-	Customer12(1)
+Customer13(5)	-	Customer12(1)
+Customer1(10)	-	Customer16(3)
+Customer13(5)	-	Customer3(6)
+Customer12(1)	-	Customer15(6)
+Customer13(5)	-	Customer5(9)
+Customer10(7)	-	Customer4(3)
+Customer16(3)	-	Customer9(8)
+Customer5(9)	-	Customer15(6)
+Customer3(6)	-	Customer15(6)
+Customer7(2)	-	Customer4(3)
+Customer12(1)	-	Customer9(8)
+Customer1(10)	-	Customer14(10)
+Customer14(10)	-	Customer2(2)
+Customer14(10)	-	Customer15(6)
+Customer6(2)	-	Customer8(4)
+Customer16(3)	-	Customer12(1)
+Customer13(5)	-	Customer4(3)
+Customer6(2)	-	Customer11(8)
+Customer15(6)	-	Customer4(3)
+Customer17(10)	-	Customer11(8)
+Customer14(10)	-	Customer3(6)
+Customer17(10)	-	Customer8(4)
+Customer12(1)	-	Customer14(10)
+Customer5(9)	-	Customer14(10)
+Customer17(10)	-	Customer4(3)
+Customer17(10)	-	Customer9(8)
+Customer16(3)	-	Customer17(10)
+Customer6(2)	-	Customer9(8)
+Customer17(10)	-	Customer3(6)
+Customer10(7)	-	Customer8(4)
+Customer17(10)	-	Customer5(9)
+Customer10(7)	-	Customer11(8)
+Customer17(10)	-	Customer2(2)
+Customer1(10)	-	Customer17(10)
+Customer12(1)	-	Customer18(1)
+Customer1(10)	-	Customer18(1)
+Customer18(1)	-	Customer2(2)
+Customer11(8)	-	Customer15(6)
+Customer7(2)	-	Customer8(4)
+Customer5(9)	-	Customer18(1)
+Customer13(5)	-	Customer11(8)
+Customer18(1)	-	Customer3(6)
+Customer7(2)	-	Customer11(8)
+Customer6(2)	-	Customer16(3)
+Customer8(4)	-	Customer15(6)
+Customer13(5)	-	Customer8(4)
+Customer14(10)	-	Customer4(3)
+Customer18(1)	-	Customer15(6)
+Customer18(1)	-	Customer4(3)
+Customer6(2)	-	Customer18(1)
+Customer17(10)	-	Customer12(1)
+Customer13(5)	-	Customer18(1)
+Customer16(3)	-	Customer15(6)
+Customer10(7)	-	Customer9(8)
+Customer10(7)	-	Customer18(1)
+Customer18(1)	-	Customer11(8)
+Customer10(7)	-	Customer16(3)
+Customer13(5)	-	Customer16(3)
+Customer9(8)	-	Customer15(6)
+Customer16(3)	-	Customer18(1)
+Customer13(5)	-	Customer9(8)
+Customer7(2)	-	Customer9(8)
+Customer7(2)	-	Customer18(1)
+Customer18(1)	-	Customer8(4)
+Customer16(3)	-	Customer7(2)
+Customer18(1)	-	Customer9(8)
+Customer18(1)	-	Customer14(10)
+Customer14(10)	-	Customer11(8)
+Customer17(10)	-	Customer18(1)
+Customer14(10)	-	Customer8(4)
+Customer6(2)	-	Customer17(10)
+Customer17(10)	-	Customer15(6)
+Customer16(3)	-	Customer14(10)
+Customer13(5)	-	Customer17(10)
+Customer10(7)	-	Customer17(10)
+Customer9(8)	-	Customer14(10)
+Customer19(2)	-	Customer8(4)
+Customer19(2)	-	Customer9(8)
+Customer19(2)	-	Customer17(10)
+Customer17(10)	-	Customer7(2)
+Customer19(2)	-	Customer11(8)
+Customer19(2)	-	Customer4(3)
+Customer19(2)	-	Customer16(3)
+Customer19(2)	-	Customer3(6)
+Customer19(2)	-	Customer5(9)
+Customer19(2)	-	Customer2(2)
+Customer19(2)	-	Customer1(10)
+Customer17(10)	-	Customer14(10)
+Customer19(2)	-	Customer12(1)
+Customer19(2)	-	Customer18(1)
+Customer19(2)	-	Customer15(6)
+Customer19(2)	-	Customer6(2)
+Customer19(2)	-	Customer13(5)
+Customer19(2)	-	Customer10(7)
+Customer19(2)	-	Customer7(2)
+Customer19(2)	-	Customer14(10)
+Customer20(2)	-	Customer17(10)
+Customer20(2)	-	Customer11(8)
+Customer20(2)	-	Customer8(4)
+Customer20(2)	-	Customer16(3)
+Customer19(2)	-	Customer20(2)
+Customer20(2)	-	Customer9(8)
+Customer20(2)	-	Customer4(3)
+Customer20(2)	-	Customer3(6)
+Customer20(2)	-	Customer5(9)
+Customer20(2)	-	Customer2(2)
+Customer1(10)	-	Customer20(2)
+Customer20(2)	-	Customer12(1)
+Customer20(2)	-	Customer18(1)
+Customer20(2)	-	Customer15(6)
+Customer13(5)	-	Customer20(2)
+Customer6(2)	-	Customer20(2)
+Customer10(7)	-	Customer20(2)
+Customer20(2)	-	Customer7(2)
+Customer20(2)	-	Customer14(10
