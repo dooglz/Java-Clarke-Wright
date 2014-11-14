@@ -44,7 +44,7 @@ public class Experiment {
 			System.out.print(vrp.size()+",");
 			for(int i=0;i<50;i++){
 				long start = System.nanoTime();
-				vrs.clarkeWrightSolution(false);
+				vrs.clarkeWrightSolution(true);
 				long delta = System.nanoTime()-start;
 				//timing.add(delta);
 				System.out.print(delta+",");
