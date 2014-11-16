@@ -116,9 +116,6 @@ For the parallel method, when a new route is created, the iteration continues th
 \paragraph{Resulting difference}
 The sequential method tends to generate an initial large route, and each subsequent route will be smaller. The Parallel method tends to have more larger routes and therefore less routes overall. Both methods are implemented and analysed in this report.
 
-\paragraph{Problem summary including any limitations of your solution.}
-
-
 \section{Method}
 \paragraph{Testing validity of algorithms}
 Each solution produced by the algorithms was tested by looping through the routes, checking that each customer was visited and that the correct quantity was delivered. The total quantity of deliveries for each route was also calculated, assuring that no route was over the capacity of the truck.
@@ -132,58 +129,7 @@ A basic solution in which a single truck was allocated to every customer was cre
 \paragraph{Testing solution computation time}
 Test were carried to measure the relative computation time for each algorithm with an increasing set of customers. The tests were carried out fifty times and the results averaged to mitigate external factors.
 
-\paragraph{Description of the experiment that you conducted.}
-
 \section{Results}
-
-\paragraph{Tables and charts}
-Tables and charts that show the performance of your solution (how long does it take to run your algorithm).
-Demonstration that your solution is valid.
-Demonstration of the quality of your solution (what is the cost).
-
-\figuremacroW
-{rand00020cwpsn}
-{Parallel Algorithm with 20 Customers}
-{}
-{0.8}
-
-\figuremacroW
-{rand00020cwsn}
-{Sequential Algorithm with 20 Customers}
-{}
-{0.8}
-
-\figuremacroW
-{rand00050cwpsn}
-{Parallel Algorithm with 50 Customers}
-{}
-{0.8}
-
-\figuremacroW
-{rand00050cwsn}
-{Sequential Algorithm with 50 Customers}
-{}
-{0.8}
-
-
-\section{Conclusions}
-
-Both Implementations of the Clarke-Wright algorithms produced expected results, with the parallel version producing larger and fewer routes. As for the time taken to calculate, the performance is roughly equal.
- 
-\paragraph{Computation time}
-The discrepancies shown in Figure \ref{fig:chart1} when the amount of customers increases beyond 800 is possibly due to optimisations carried out by the Java virtual machine. The total operations carried out is roughly the same for each algorithm, however the arrays are accessed and modified at different times, this is a possible cause for the difference in processing time.
-
-\paragraph{Solution Quality}
-The Parallel solution produced a large saving of up to a 600\% increase against the baseline cost, shown in Figure \ref{fig:chart2}. The Sequential solution produced a constant saving of around 200\%. These results are also shown in Figure \ref{fig:chart3}, showing the number of routes.
-
-\paragraph{Summary of your results.}
-Summary of your results.
-Reflection on your performance on this assessment. 
-
-\section{Appendix}
-
-\bibliographystyle{acmsiggraph}
-\bibliography{report}
 
 \afterpage{\clearpage}
 
@@ -243,7 +189,6 @@ Customers & cost & Cost & Cost & Routes & Routes & (Seconds) & (Seconds) \\ \hli
     1000                 & 390783             & 199258          & 61701         & 497               & 109             & 39.20094816               & 35.98109894             \\\hline
     \end{tabular}
    
-    
     \caption[Table caption text]{Results of all tests carried out on both versions of the Clarke Wright algorithm}
     \label{table:name}
     \end{minipage} }
@@ -251,7 +196,51 @@ Customers & cost & Cost & Cost & Routes & Routes & (Seconds) & (Seconds) \\ \hli
 \end{table}
 
 \clearpage
-\section{Code}
+
+\figuremacroW
+{rand00020cwpsn}
+{Parallel Algorithm with 20 Customers}
+{}
+{0.76}
+
+\figuremacroW
+{rand00020cwsn}
+{Sequential Algorithm with 20 Customers}
+{}
+{0.76}
+
+\figuremacroW
+{rand00050cwpsn}
+{Parallel Algorithm with 50 Customers}
+{}
+{0.755}
+
+\figuremacroW
+{rand00050cwsn}
+{Sequential Algorithm with 50 Customers}
+{}
+{0.75}
+
+
+\section{Conclusions}
+\paragraph{Computation time}
+Both Implementations of the Clarke-Wright algorithms produced expected results, with the parallel version producing larger and fewer routes. As for the time taken to calculate, the performance is roughly equal.
+The discrepancies shown in Figure \ref{fig:chart1} when the amount of customers increases beyond 800 is possibly due to optimisations carried out by the Java virtual machine. The total operations carried out is roughly the same for each algorithm, however the arrays are accessed and modified at different times, this is a possible cause for the difference in processing time.
+
+\paragraph{Solution Quality}
+The Parallel solution produced a large saving of up to a 600\% increase against the baseline cost, shown in Figure \ref{fig:chart2}. The Sequential solution produced a constant saving of around 200\%. These results are also shown in Figure \ref{fig:chart3}, showing the number of routes.
+
+\paragraph{Edge Cases}
+It is possible that a customer can be left our of all routes due to capacity constraints, this is checked for at the end of the calculation. If a customer is left over, it is seen if it would be possible to add it to any existing route and then if it would be more efficient than sending out a new truck. This can be seen in Figure \ref{fig:rand00020cwpsn}, the customer in the top left falls in to this edge case category.
+
+\paragraph{Conclusion}
+The implementation written for this report successfully computes optimised and usable data, the processing cost increases in a quadratic relation to the size of data. The specific implementation could be optimised to produce quicker results. One possible optimisation route could be a custom sort method, as profiling reported that 40\% of the processing time is taken by the initial sort of the customer pairs.\\
+Overall this report produced repeatable and meaningful data, and can be seen as a successful investigation into the Clark-Wright Algorithm.
+\bibliographystyle{acmsiggraph}
+\bibliography{report}
+\clearpage
+
+\section{Appendix: Code}
 \subsection{ClarkeWright.java}
 \lstinputlisting[language=Java]{../src/ClarkeWright.java}
 
