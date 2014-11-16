@@ -133,7 +133,7 @@ public class ClarkeWright
 					if(e1 == cr1 ||e1 == cr2){
 						//could we combine these based on weight?
 						if(e2.c + ro.getWeight() <= truckCapacity){
-							//Does the route already contain BOTH these nodes?
+							//Does route already contain BOTH these nodes?
 							if(!ro.customers.contains(e2)){
 								//no, but is it in another route already?
 								boolean istaken = false;
@@ -192,18 +192,21 @@ public class ClarkeWright
 
 		}
 
-		//Edge case: A single Customer can be left out of all routes due to capacity constraints
+		//A Customer can be left over due to capacity constraints
 		outerloop:for(Customer C:abandoned){
 			//we could tack this onto the end of a route if it would fit
 			for(Route r:routes){
 				if(r.getWeight() + C.c < truckCapacity)
 				{
 					//would this be more efficient than sending a new truck?
-					Customer[] cca = {r.customers.get(r.customers.size()-1),r.customers.get(0)};
+					Customer[] cca={r.customers.get(r.customers.size()-1),
+					r.customers.get(0)};
 					for(Customer cc:cca){
 						double X = C.x - cc.x;
-						double Y = C.y - cc.y;	
-						if(Math.sqrt((X*X)+(Y*Y)) < Math.sqrt((C.x*C.x)+(C.y*C.y))){
+						double Y = C.y - cc.y;
+						if(Math.sqrt((X*X)+(Y*Y)) 
+						< Math.sqrt((C.x*C.x)+(C.y*C.y)))
+						{
 							r.addCustomer(C, false);
 							break outerloop;
 						}
@@ -272,7 +275,7 @@ public class ClarkeWright
 					if(e1 == cr1 || e1 == cr2){
 						//could we combine these based on weight?
 						if(e2.c + ro.getWeight() <= truckCapacity){
-							//Does the route already contain BOTH these nodes?
+							//Does route already contain BOTH these nodes?
 							if(!ro.customers.contains(e2)){
 								//no, but is it in another route already?
 								boolean istaken = false;
@@ -331,18 +334,21 @@ public class ClarkeWright
 
 		}
 
-		//Edge case: A single Customer can be left out of all routes due to capacity constraints
+		//A Customer can be left over due to capacity constraints
 		outerloop:for(Customer C:abandoned){
 			//we could tack this onto the end of a route if it would fit
 			for(Route r:routes){
 				if(r.getWeight() + C.c < truckCapacity)
 				{
 					//would this be more efficient than sending a new truck?
-					Customer[] cca = {r.customers.get(r.customers.size()-1),r.customers.get(0)};
+					Customer[] cca={r.customers.get(r.customers.size()-1),
+					r.customers.get(0)};
 					for(Customer cc:cca){
 						double X = C.x - cc.x;
-						double Y = C.y - cc.y;	
-						if(Math.sqrt((X*X)+(Y*Y)) < Math.sqrt((C.x*C.x)+(C.y*C.y))){
+						double Y = C.y - cc.y;
+						if(Math.sqrt((X*X)+(Y*Y)) 
+						< Math.sqrt((C.x*C.x)+(C.y*C.y)))
+						{
 							r.addCustomer(C, false);
 							break outerloop;
 						}
