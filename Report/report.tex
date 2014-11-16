@@ -72,15 +72,6 @@
 
 \usepackage{lipsum}
 
-\TOGonlineid{45678}
-\TOGvolume{0}
-\TOGnumber{0}
-\TOGarticleDOI{1111111.2222222}
-\TOGprojectURL{}
-\TOGvideoURL{}
-\TOGdataURL{}
-\TOGcodeURL{}
-
 \title{Clarke-Wright vehicle routing algorithm\\
 	   Implementation Report}
 
@@ -89,7 +80,7 @@ Edinburgh Napier University\\
 Algorithms and Data Structures (SET09117)}
 \pdfauthor{Sam Serrels}
 
-\keywords{Multi-platform Physics, Optimisation, GPU, Cell, PS3}
+\keywords{Vehicle Routing, Clarke Wright}
 
 \begin{document}
 
@@ -97,24 +88,58 @@ Algorithms and Data Structures (SET09117)}
 
 \section{Introduction}
 
+\paragraph{Vehicle Routing}
+Finding the optimal route for a delivery truck, delivering items of varying size to customers spread over a large area, is a complex and computationally intensive task.
+The problem is similar to the travelling salesman problem, where the task is to find the shortest route to visit every location within a set only once.\\
+The Delivery truck problem extends this with the additional factors that the delivery trucks have a capacity limit to how much they can carry, and thus how many of the customers can be served by a single truck. 
 
-\cite{CW}
-\cite{CWj}
+\paragraph{Multiple Trucks}
+The capacity limitations means that multiple routes must be generated. If delivery time is a factor, then multiple trucks could be driving simultaneously, conversely a single truck could go round one route, resupply at the depot, then drive around another route. This report is not taking delivery time into into account, only the number of routes, and the combined cost of all the routes. The truck capacity is assumed to be the same for all trucks.
+
+\paragraph{Multiple routes}
+Generating the optimal path for multiple routes is no longer a simple optimisation task, multiple approaches can be taken and often the solution chosen is not the mathematically perfect, but chosen as a trade-off between efficiency and computation time. Assigning one customer to one route means taking into account the effects this will have for the other routes. A brute force method could be taken, to process all the possible route combinations, or a saving algorithm could be used.
+
+\paragraph{G. Clarke and J. W. Wright's Saving Algorithm}
+The savings algorithm implemented and tested in this report is the Clarke-Wright algorithm, first described in the 1962 paper "Scheduling of vehicles from a central depot to a number of delivery points" \cite{CW}.
+The algorithm finds a solution to the problem in a heuristic manor, so the result will not be the perfect solution, but should be reality close to perfect with substantially less computation time than a brute force attempt. 
+
+\paragraph{Customer Pairs}
+The Algorithm first starts by calculating the "savings" of delivery to a single pair of customers, rather than each customers on two trips. This is done for every combination of customers, resulting in a list or every customer pair and the corresponding savings. This list is sorted by the savings, in descending order.
+
+\paragraph{Assigning Pairs to routes}
+The first pair forms the start of the first route. The sorted list of pairs is then iterated through, if a pair can be added to the start or end of the route, and the route does not contain both elements of the pair already, and the combined route would not be over capacity of a truck, then the pair is added to the route. If a pair is encountered that has no elements already in a route, then this would form the start of a new route. How this is handled in execution depends on which version of the Clarke-Wright algorithm is implemented.
+
+\paragraph{Parallel and Sequential methods}
+There are two ways to implement the Clarke-Wright algorithm, they both follow the same logic, but the order in which the task are carried out is different. This is described in the 1997 paper "Clarke and Wright's Savings Algorithm"\cite{CWj}.\\
+The difference lies in the situation where a pair is encountered that could form a new route. In the sequential method, a new route is formed, but it is stored until all other pairs have been compared with the original route, then the remaining pairs are iterated though again but compared to the new route. This is repeated for any new route that is formed.
+For the parallel method, when a new route is created, the iteration continues through the list of pairs, but each one is checked against all routes in the same cycle of iteration.
+\paragraph{Resulting difference}
+The sequential method tends to generate an initial large route, and each subsequent route will be smaller. The Parallel method tends to have more larger routes and therefore less routes overall. Both methods are implemented and analysed in this report.
+
 \paragraph{Problem summary including any limitations of your solution.}
-Large and complex video games tend to use 3rd party physics solutions, this vastly cuts down on the project development man-hours, and the maintenance thereafter. Third party physics solutions have the benefit of being battle tested out in the wild beforehand, so internal reliability is usually a given. A further benefit is that being developed solely for the purpose of being a "a good physics engine" by people who are usually experts in the field, large optimisations are already implemented. The problems arise in the implementation, the coupling of a physics engine and the existing codebase. While they are usually well coded, they are not tailor made to each game. 
+
 
 \section{Method}
+\paragraph{Testing validity of algorithms}
+Each solution produced by the algorithms was tested by looping through the routes, checking that each customer was visited and that the correct quantity was delivered. The total quantity of deliveries for each route was also calculated, assuring that no route was over the capacity of the truck.
+
+\paragraph{Output}
+The generated routes were exported as a .csv data file, and a visualisation of the routes were also generated and saved as a .svg vector image format. These images are included in the report and can bee seen in the results section.
+
+\paragraph{Testing solution quality}
+A basic solution in which a single truck was allocated to every customer was created, forming the most ineffective solution possible. This was used as the baseline set of data that the Clarke-Wright solutions were compared against. The solution cost and total number of routes for each algorithm were compared to each other and to the baseline numbers.
+
+\paragraph{Testing solution computation time}
+Test were carried to measure the relative computation time for each algorithm with an increasing set of customers. The tests were carried out fifty times and the results averaged to mitigate external factors.
+
 \paragraph{Description of the experiment that you conducted.}
-Trying to regain performance from an external physics engine can be a hard task, diving into the source code requires expert knowledge of the inner-workings of the whole system. A common path is to shape the design of the game code to conform better to the demands of the physics engine and hope that the internal optimisations  will be sufficient. Often enough, they are not.
 
 \section{Results}
 
+\paragraph{Tables and charts}
 Tables and charts that show the performance of your solution (how long does it take to run your algorithm).
 Demonstration that your solution is valid.
 Demonstration of the quality of your solution (what is the cost).
-
-\paragraph{Optimising for Physics Engines}
-Trying to regain performance from an external physics engine can be a hard task, diving into the source code requires expert knowledge of the inner-workings of the whole system. A common path is to shape the design of the game code to conform better to the demands of the physics engine and hope that the internal optimisations  will be sufficient. Often enough, they are not.
 
 \figuremacroW
 {rand00020cwpsn}
@@ -128,8 +153,6 @@ Trying to regain performance from an external physics engine can be a hard task,
 {}
 {0.8}
 
-\lipsum
-
 \figuremacroW
 {rand00050cwpsn}
 {Parallel Algorithm with 50 Customers}
@@ -142,6 +165,27 @@ Trying to regain performance from an external physics engine can be a hard task,
 {}
 {0.8}
 
+
+\section{Conclusions}
+
+Both Implementations of the Clarke-Wright algorithms produced expected results, with the parallel version producing larger and fewer routes. As for the time taken to calculate, the performance is roughly equal.
+ 
+\paragraph{Computation time}
+The discrepancies shown in Figure \ref{fig:chart1} when the amount of customers increases beyond 800 is possibly due to optimisations carried out by the Java virtual machine. The total operations carried out is roughly the same for each algorithm, however the arrays are accessed and modified at different times, this is a possible cause for the difference in processing time.
+
+\paragraph{Solution Quality}
+The Parallel solution produced a large saving of up to a 600\% increase against the baseline cost, shown in Figure \ref{fig:chart2}. The Sequential solution produced a constant saving of around 200\%. These results are also shown in Figure \ref{fig:chart3}, showing the number of routes.
+
+\paragraph{Summary of your results.}
+Summary of your results.
+Reflection on your performance on this assessment. 
+
+\section{Appendix}
+
+\bibliographystyle{acmsiggraph}
+\bibliography{report}
+
+\afterpage{\clearpage}
 
 \figuremacroF
 {chart1}
@@ -160,19 +204,6 @@ Trying to regain performance from an external physics engine can be a hard task,
 {Clark Wright Routes}
 {Number of routes required by each algorithm. X-axis is not a uniform scale.}
 {1.0}
-
-\section{Conclusions}
-
-\paragraph{Optimising for Physics Engines}
-Summary of your results.
-Reflection on your performance on this assessment. 
-
-\section{Appendix}
-
-\bibliographystyle{acmsiggraph}
-\bibliography{report}
-
-\afterpage{\clearpage}
 
 \begin{table}[b]
 {
