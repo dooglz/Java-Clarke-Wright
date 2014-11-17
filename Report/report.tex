@@ -97,20 +97,20 @@ The Delivery truck problem extends this with the additional factors that the del
 The capacity limitations means that multiple routes must be generated. If delivery time is a factor, then multiple trucks could be driving simultaneously, conversely a single truck could go round one route, resupply at the depot, then drive around another route. This report is not taking delivery time into into account, only the number of routes, and the combined cost of all the routes. The truck capacity is assumed to be the same for all trucks.
 
 \paragraph{Multiple routes}
-Generating the optimal path for multiple routes is no longer a simple optimisation task, multiple approaches can be taken and often the solution chosen is not the mathematically perfect, but chosen as a trade-off between efficiency and computation time. Assigning one customer to one route means taking into account the effects this will have for the other routes. A brute force method could be taken, to process all the possible route combinations, or a saving algorithm could be used.
+Generating the optimal path for multiple routes is no longer a simple optimisation task, multiple approaches can be taken and often the solution chosen is not the mathematically perfect, but chosen as a trade-off between efficiency and computation time. Assigning one customer to one route means taking into account the effects this will have for the other routes. A brute force method could be taken to process all the possible route combinations, or a saving algorithm could be used.
 
 \paragraph{G. Clarke and J. W. Wright's Saving Algorithm}
 The savings algorithm implemented and tested in this report is the Clarke-Wright algorithm, first described in the 1962 paper "Scheduling of vehicles from a central depot to a number of delivery points" \cite{CW}.
-The algorithm finds a solution to the problem in a heuristic manor, so the result will not be the perfect solution, but should be reality close to perfect with substantially less computation time than a brute force attempt. 
+The algorithm finds a solution to the problem in a heuristic manor, so the result will not be the perfect solution, but should be relatively close to perfect with substantially less computation time than a brute force attempt. 
 
 \paragraph{Customer Pairs}
-The Algorithm first starts by calculating the "savings" of delivery to a single pair of customers, rather than each customers on two trips. This is done for every combination of customers, resulting in a list or every customer pair and the corresponding savings. This list is sorted by the savings, in descending order.
+The Algorithm first starts by calculating the "savings" of delivery to a single pair of customers, rather than each customer on two trips. This is done for every combination of customers, resulting in a list or every customer pair and the corresponding savings. This list is sorted by the savings, in descending order.
 
 \paragraph{Assigning Pairs to routes}
 The first pair forms the start of the first route. The sorted list of pairs is then iterated through, if a pair can be added to the start or end of the route, and the route does not contain both elements of the pair already, and the combined route would not be over capacity of a truck, then the pair is added to the route. If a pair is encountered that has no elements already in a route, then this would form the start of a new route. How this is handled in execution depends on which version of the Clarke-Wright algorithm is implemented.
 
 \paragraph{Parallel and Sequential methods}
-There are two ways to implement the Clarke-Wright algorithm, they both follow the same logic, but the order in which the task are carried out is different. This is described in the 1997 paper "Clarke and Wright's Savings Algorithm"\cite{CWj}.\\
+There are two ways to implement the Clarke-Wright algorithm, they both follow the same logic, but the order in which the tasks are carried out is different. This is described in the 1997 paper "Clarke and Wright's Savings Algorithm"\cite{CWj}.\\
 The difference lies in the situation where a pair is encountered that could form a new route. In the sequential method, a new route is formed, but it is stored until all other pairs have been compared with the original route, then the remaining pairs are iterated though again but compared to the new route. This is repeated for any new route that is formed.
 For the parallel method, when a new route is created, the iteration continues through the list of pairs, but each one is checked against all routes in the same cycle of iteration.
 \paragraph{Resulting difference}
@@ -127,7 +127,8 @@ The generated routes were exported as a .csv data file, and a visualisation of t
 A basic solution in which a single truck was allocated to every customer was created, forming the most ineffective solution possible. This was used as the baseline set of data that the Clarke-Wright solutions were compared against. The solution cost and total number of routes for each algorithm were compared to each other and to the baseline numbers.
 
 \paragraph{Testing solution computation time}
-Test were carried to measure the relative computation time for each algorithm with an increasing set of customers. The tests were carried out fifty times and the results averaged to mitigate external factors.
+Test were carried to measure the relative computation time for each algorithm with an increasing set of customers. The tests were carried out fifty times and the results averaged to mitigate external factors.\\
+The program was executed on a linux based server, the Java Virtual machine was allocated an initial memory size of 2GB to avoid heap increase slowdowns and the JVM was also running in server mode. These conditions should result in the best possible testing environment in terms of  repeatable and consistent results.
 
 \section{Results}
 
@@ -142,7 +143,7 @@ Test were carried to measure the relative computation time for each algorithm wi
 \figuremacroF
 {chart2}
 {Clark Wright Percentage Savings}
-{The Percentage distance cost saved by each algorithm, based from sending a single truck to each customer}
+{The Percentage distance cost saved by each algorithm, based from sending a single truck to each customer. X-axis is not a uniform scale.}
 {1.0}
 
 \figuremacroF
