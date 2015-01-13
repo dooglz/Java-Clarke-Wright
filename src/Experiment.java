@@ -37,19 +37,16 @@ public class Experiment {
 				"fail00004"
 				};
 		for (String f:probs){
-			ArrayList<Long> timing = new ArrayList<Long>();
 			VRProblem vrp = new VRProblem(problemdir+f+"prob.csv");
 			VRSolution vrs = new VRSolution(vrp);
-			System.out.printf("%s, %d\n",f,vrp.size());
+			System.out.print(vrp.size()+",");
 			for(int i=0;i<50;i++){
 				long start = System.nanoTime();
-				vrs.clarkeWrightSolution(false);
+				vrs.clarkeWrightSolution(true);
 				long delta = System.nanoTime()-start;
-				timing.add(delta);
-				System.out.print(delta+", ");
+				System.out.print(delta+",");
 			}
-			System.out.print("\n\n");
-			//vrs.writeOut(outdir+f+"CWsn.csv");
+			System.out.print("\n");
 		}
 		
 	}

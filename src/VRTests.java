@@ -38,11 +38,11 @@ public class VRTests {
 				"fail00002",
 				"fail00004"
 				};
-		System.out.println("Problem     \tSoln\tCusts\tTrips\tCost\tValid");
-		
+		//System.out.println("Problem     \tSoln\tCusts\tTrips\tCost\tValid");
+		System.out.println("Custs\tCW\tCWP\tOC\tCwC\tCwpC");
 		for (String base:shouldPass){
 		
-			System.out.println(base+"------");
+		//	System.out.println(base+"------");
 			VRProblem vrp = new VRProblem(problemdir+base+"prob.csv");
 			VRSolution vrs = new VRSolution(vrp);
 			VRSolution vrps = new VRSolution(vrp);
@@ -50,13 +50,15 @@ public class VRTests {
 
 			//Print out results of costing and verifying the solution
 			vrds.oneRoutePerCustomerSolution();
-			System.out.printf("%s\t%s\t%d\t%d\t%.0f\t%s\n",base,"Dumb",vrp.size(),vrds.soln.size(),vrds.solnCost(),vrds.verify());
+			//System.out.printf("%s\t%s\t%d\t%d\t%.0f\t%s\n",base,"Dumb",vrp.size(),vrds.soln.size(),vrds.solnCost(),vrds.verify());
 			
 			vrs.clarkeWrightSolution(false);
-			System.out.printf("%s\t%s\t%d\t%d\t%.0f\t%s\n",base,"CW",vrp.size(),vrs.soln.size(),vrs.solnCost(),vrs.verify());
+			//System.out.printf("%s\t%s\t%d\t%d\t%.0f\t%s\n",base,"CW",vrp.size(),vrs.soln.size(),vrs.solnCost(),vrs.verify());
 			
 			vrps.clarkeWrightSolution(true);
-			System.out.printf("%s\t%s\t%d\t%d\t%.0f\t%s\n",base,"CWP",vrp.size(),vrps.soln.size(),vrps.solnCost(),vrps.verify());
+			//System.out.printf("%s\t%s\t%d\t%d\t%.0f\t%s\n",base,"CWP",vrp.size(),vrps.soln.size(),vrps.solnCost(),vrps.verify());
+
+			System.out.printf("%d\t%d\t%d\t%.0f\t%.0f\t%.0f\t\n",vrp.size(),vrs.soln.size(),vrps.soln.size(),vrds.solnCost(),vrs.solnCost(),vrps.solnCost());
 			
 			//Write the SVG file
 			vrds.writeSVG(outdir+base+"prob.svg",outdir+base+"dumbsn.svg");
